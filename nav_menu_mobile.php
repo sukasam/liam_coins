@@ -3,18 +3,18 @@
     <ul class="topbar-mobile">
         <li>
             <div class="left-top-bar">
-                Welcome to our store..
+                <?php echo WELCOME_TO_OUR_STORE;?>
             </div>
         </li>
 
         <li>
             <div class="right-top-bar flex-w h-full">
-                <a href="#" class="flex-c-m p-lr-10 trans-04">
-                    ABOUT US
+                <a href="about-us.php" class="flex-c-m p-lr-10 trans-04">
+                    <?php echo strtoupper(ABOUT_US);?>
                 </a>
 
-                <a href="#" class="flex-c-m p-lr-10 trans-04">
-                    LOGIN
+                <a href="login.php" class="flex-c-m p-lr-10 trans-04">
+                    <?php echo strtoupper(LOGIN);?>
                 </a>
 
                 <!-- <a href="#" class="flex-c-m p-lr-10 trans-04">
@@ -29,41 +29,26 @@
     </ul>
 
     <ul class="main-menu-m">
-        <li>
-            <a href="index.php">Home</a>
-        </li>
 
-        <!-- <li>
-            <a href="index.php">Home</a>
-            <ul class="sub-menu-m">
-                <li><a href="index.php">Homepage 1</a></li>
-                <li><a href="home-02.php">Homepage 2</a></li>
-                <li><a href="home-03.php">Homepage 3</a></li>
-            </ul>
-            <span class="arrow-main-menu-m">
-                <i class="fa fa-angle-right" aria-hidden="true"></i>
-            </span>
-        </li> -->
-
-        <li>
-            <a href="#">Banknotes</a>
-            <ul class="sub-menu-m">
-                <li><a href="#">New arrivals</a></li>
-                <li><a href="#">Banknotes by countries</a></li>
-                <li><a href="#">Specimen banknotes</a></li>
-            </ul>
-            <span class="arrow-main-menu-m">
-                <i class="fa fa-angle-right" aria-hidden="true"></i>
-            </span>
+    <li>
+            <a href="index.php"><?php echo HOME;?></a>
         </li>
 
         <li>
-            <a href="#">Coins</a>
+            <?php 
+                $rowCatSub1 = get_redirect_product($conn,1);
+            ?>
+            <a href="product.php?cat_id=<?php echo encode(1,LIAM_COINS_KEY);?>&catsub_id=<?php echo encode($rowCatSub1,LIAM_COINS_KEY);?>"><?php echo get_category_name($conn,1);?></a>
             <ul class="sub-menu-m">
-                <li><a href="#">Gold coins</a></li>
-                <li><a href="#">Silver coins</a></li>
-                <li><a href="#">Coins by countries</a></li>
-                <li><a href="#">Certified coins</a></li>
+                <?php
+                $sqlCatSubMenu = "SELECT * FROM `lc_category_sub` WHERE `category` = 1 ORDER BY id ASC";
+                $quCatSubMenu = mysqli_query($conn,$sqlCatSubMenu);
+                while($rowCatSubMenu = mysqli_fetch_array($quCatSubMenu, MYSQLI_ASSOC)){
+                    ?>
+                    <li><a href="product.php?cat_id=<?php echo encode(1,LIAM_COINS_KEY);?>&catsub_id=<?php echo encode($rowCatSubMenu['id'],LIAM_COINS_KEY);?>"><?php echo $rowCatSubMenu['name'];?></a></li>
+                    <?php
+                }
+                ?>
             </ul>
             <span class="arrow-main-menu-m">
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -71,10 +56,18 @@
         </li>
 
         <li>
-            <a href="#">Numismatics</a>
+            <?php $rowCatSub2 = get_redirect_product($conn,2);?>
+            <a href="product.php?cat_id=<?php echo encode(2,LIAM_COINS_KEY);?>&catsub_id=<?php echo encode($rowCatSub2,LIAM_COINS_KEY);?>"><?php echo get_category_name($conn,2);?></a>
             <ul class="sub-menu-m">
-                <li><a href="#">Buy and sell</a></li>
-                <li><a href="#">Numismatic service</a></li>
+                <?php
+                $sqlCatSubMenu = "SELECT * FROM `lc_category_sub` WHERE `category` = 2 ORDER BY id ASC";
+                $quCatSubMenu = mysqli_query($conn,$sqlCatSubMenu);
+                while($rowCatSubMenu = mysqli_fetch_array($quCatSubMenu, MYSQLI_ASSOC)){
+                    ?>
+                    <li><a href="product.php?cat_id=<?php echo encode(2,LIAM_COINS_KEY);?>&catsub_id=<?php echo encode($rowCatSubMenu['id'],LIAM_COINS_KEY);?>"><?php echo $rowCatSubMenu['name'];?></a></li>
+                    <?php
+                }
+                ?>
             </ul>
             <span class="arrow-main-menu-m">
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -82,11 +75,10 @@
         </li>
 
         <li>
-            <a href="#">Auctions</a>
+            <a href="numismatics-buy-and-sell.php"><?php echo NUMISMATICS;?></a>
             <ul class="sub-menu-m">
-                <li><a href="#">Upcoming auctions</a></li>
-                <li><a href="#">Intresting auctions results</a></li>
-                <li><a href="#">Bid</a></li>
+                <li><a href="numismatics-buy-and-sell.php"><?php echo BUY_AND_SELL;?></a></li>
+                <li><a href="numismatics-service.php"><?php echo NUMISMATIC_SERVICE;?></a></li>
             </ul>
             <span class="arrow-main-menu-m">
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -94,10 +86,11 @@
         </li>
 
         <li>
-            <a href="#">investment</a>
+            <a href="upcoming-auctions.php"><?php echo AUCTIONS;?></a>
             <ul class="sub-menu-m">
-                <li><a href="#">Banknotes investment</a></li>
-                <li><a href="#">Coins investment</a></li>
+                <li><a href="upcoming-auctions.php"><?php echo UPCOMING_AUCTIONS;?></a></li>
+                <li><a href="intresting-auctions-results.php"><?php echo INTERESTING_AUCTIONS_RESULTS;?></a></li>
+                <li><a href="auctions-bid.php"><?php echo BID;?></a></li>
             </ul>
             <span class="arrow-main-menu-m">
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -105,33 +98,23 @@
         </li>
 
         <li>
-            <a href="#">About us</a>
+            <a href="banknotes-investment.php"><?php echo INVESTMENT;?></a>
+            <ul class="sub-menu-m">
+                <li><a href="banknotes-investment.php"><?php echo BANKNOTES_INVESTMENT;?></a></li>
+                <li><a href="coins-investment.php"><?php echo COINS_INVESTMENT;?></a></li>
+            </ul>
+            <span class="arrow-main-menu-m">
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+            </span>
         </li>
 
         <li>
-            <a href="#">Register</a>
-        </li>
-
-
-
-        <!-- <li>
-            <a href="product.php">Shop</a>
+            <a href="about-us.php"><?php echo ABOUT_US;?></a>
         </li>
 
         <li>
-            <a href="shoping-cart.php" class="label1 rs1" data-label1="hot">Features</a>
+            <a href="register.php"><?php echo REGISTER;?></a>
         </li>
 
-        <li>
-            <a href="blog.php">Blog</a>
-        </li>
-
-        <li>
-            <a href="about.php">About</a>
-        </li>
-
-        <li>
-            <a href="contact.php">Contact</a>
-        </li> -->
     </ul>
 </div>

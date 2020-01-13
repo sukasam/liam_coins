@@ -4,16 +4,16 @@
     <div class="top-bar">
         <div class="content-topbar flex-sb-m h-full container">
             <div class="left-top-bar">
-                Welcome to our store..
+                <?php echo WELCOME_TO_OUR_STORE;?>
             </div>
 
             <div class="right-top-bar flex-w h-full">
-                <a href="#" class="flex-c-m trans-04 p-lr-25">
-                    ABOUT US
+                <a href="about-us.php" class="flex-c-m trans-04 p-lr-25">
+                    <?php echo strtoupper(ABOUT_US);?>
                 </a>
 
-                <a href="#" class="flex-c-m trans-04 p-lr-25">
-                    LOGIN
+                <a href="login.php" class="flex-c-m trans-04 p-lr-25">
+                    <?php echo strtoupper(LOGIN);?>
                 </a>
 
                 <!-- <a href="#" class="flex-c-m trans-04 p-lr-25">
@@ -31,8 +31,8 @@
         <nav class="limiter-menu-desktop container">
             
             <!-- Logo desktop -->		
-            <a href="#" class="logo">
-                <img src="images/icons/logo-01.png" alt="IMG-LOGO">
+            <a href="index.php" class="logo">
+                <img src="images/icons/liam-coins-logo.png" alt="IMG-LOGO">
             </a>
 
             <?php include_once('nav_menu.php');?>	

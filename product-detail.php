@@ -1,7 +1,26 @@
+<?php
+	include_once("include/include_app.php");
+
+	if(isset($_GET['id']) && $_GET['id'] != ""){
+
+		$pID = decode($_GET['id'],LIAM_COINS_KEY);
+	  
+		$quPro = mysqli_query($conn, "SELECT * FROM `lc_product` WHERE `id` = '".$pID."' AND `status` = '1' LIMIT 1");
+		$rowPro = mysqli_fetch_array($quPro, MYSQLI_ASSOC);
+		if($rowPro){
+		  $pro_id= $rowPro['id'];
+		}else{
+		  header("Location:index.php?action=failed");
+		}
+	  }else{
+		header("Location:index.php?action=failed");
+	  }
+	
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Product Detail</title>
+	<title>Product Detail - <?php echo $rowPro['name'];?></title>
 	<?php include_once('head_meta.php');?>
 </head>
 <body class="animsition">
@@ -24,17 +43,22 @@
 	<div class="container">
 		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
 			<a href="index.php" class="stext-109 cl8 hov-cl1 trans-04">
-				Home
+				<?php echo HOME;?>
 				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
 			</a>
 
-			<a href="product.php" class="stext-109 cl8 hov-cl1 trans-04">
-				New arrivals 
+			<a href="product.php?cat_id=<?php echo encode($rowPro['category'],LIAM_COINS_KEY);?>" class="stext-109 cl8 hov-cl1 trans-04">
+				<?php echo get_category_name($conn,$rowPro['category']);?>
+				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+			</a>
+
+			<a href="product.php?cat_id=<?php echo encode($rowPro['category'],LIAM_COINS_KEY);?>&catsub_id=<?php echo encode($rowPro['category_sub'],LIAM_COINS_KEY);?>" class="stext-109 cl8 hov-cl1 trans-04">
+				<?php echo get_category_sub_name($conn,$rowPro['category_sub']);?>
 				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
 			</a>
 
 			<span class="stext-109 cl4">
-				British India 10 Rupees J.B.Taylor 1938 Rare Banknote (8)
+				<?php echo $rowPro['name'];?>
 			</span>
 		</div>
 	</div>
@@ -50,12 +74,21 @@
 							<div class="wrap-slick3-dots"></div>
 							<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
 
-							<div class="slick3 gallery-lb">
-								<div class="item-slick3" data-thumb="images/product-01.jpg">
-									<div class="wrap-pic-w pos-relative">
-										<img src="images/product-01.jpg" alt="IMG-PRODUCT">
+							<?php 
+								$proImages = '';
+								if(!empty($rowPro['images'])){
+									$proImages = 'uploads/product/'.$rowPro['images'];
+								}else{
+									$proImages = 'uploads/product/none.jpg';
+								}
+							?>
 
-										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-01.jpg">
+							<div class="slick3 gallery-lb">
+								<div class="item-slick3" data-thumb="<?php echo $proImages;?>">
+									<div class="wrap-pic-w pos-relative">
+										<img src="<?php echo $proImages;?>" alt="<?php echo $rowPro['name'];?>">
+
+										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="<?php echo $proImages;?>">
 											<i class="fa fa-expand"></i>
 										</a>
 									</div>
@@ -88,17 +121,15 @@
 				<div class="col-md-6 col-lg-5 p-b-30">
 					<div class="p-r-50 p-t-5 p-lr-0-lg">
 						<h4 class="mtext-105 cl2 js-name-detail p-b-14">
-							British India 10 Rupees J.B.Taylor 1938 Rare Banknote (8)
+							<?php echo $rowPro['name'];?>
 						</h4>
 
 						<span class="mtext-106 cl2">
-							₹3,950
+							<?php echo LIAM_COINS_CURRENCY.number_format($rowPro['price'],2);?>
 						</span>
 
 						<p class="stext-102 cl3 p-t-23">
-                        British India 10 Rupees J.B.Taylor 1938 Rare Banknote<br>
-1st issue. Printed in Navy Blue, Bottle Green, Sky Blue and Pale Green on machine made paper with watermark: Profile portrait of King George VI to right. In the centre TEN RUPEES/ RESERVE/ BANK/ OF/ INDIA/ TEN RUPEES in six lines with figure 10 in intaglio in 3 corners of the note. The issue was withdrawn from circulation on 27th October 1957.
-J.B.Taylor CD. Deshmukh
+							<?php echo stripslashes($rowPro['detail']);?>
                         </p>
 
 						<!--  -->
@@ -118,7 +149,7 @@ J.B.Taylor CD. Deshmukh
 									</div>
 
 									<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
-										Add to cart
+										<?php echo ADD_TO_CART;?>
 									</button>
 								</div>
 							</div>	
@@ -147,12 +178,7 @@ J.B.Taylor CD. Deshmukh
 						<!-- - -->
 						<div class="tab-pane fade show active" id="description" role="tabpanel">
 							<div class="how-pos2 p-lr-15-md">
-								<h4 class="mtext-105 cl2 js-name-detail p-b-14">British India 10 Rupees J.B.Taylor 1938 Rare Banknote</h4>
-								<p class="stext-102 cl6">
-								1st issue. Printed in Navy Blue, Bottle Green, Sky Blue and Pale Green on machine made paper with watermark: Profile portrait of King George VI to right. In the centre TEN RUPEES/ RESERVE/ BANK/ OF/ INDIA/ TEN RUPEES in six lines with figure 10 in intaglio in 3 corners of the note. The issue was withdrawn from circulation on 27th October 1957.
-J.B.Taylor CD. Deshmukh
-
-								</p>
+								<?php echo stripslashes($rowPro['description']);?>
 							</div>
 						</div>
 

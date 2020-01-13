@@ -1,7 +1,58 @@
+<?php
+	include_once("include/include_app.php");
+
+	$num = 0;
+	$e_page=16; // กำหนด จำนวนรายการที่แสดงในแต่ละหน้า   
+	$step_num=0;
+	$sqlPro = "";
+	$cat_id = "";
+	$catsub_id = "";
+	$totalPro = 0;
+	$query_str = '';
+
+	if(isset($_GET['cat_id']) && $_GET['cat_id'] != ""){
+		$cat_id = decode($_GET['cat_id'],LIAM_COINS_KEY);
+		$sqlPro = "SELECT * FROM `lc_product` WHERE status = '1' AND category = '".$cat_id."' ORDER BY id DESC";
+		$quPro = mysqli_query($conn,$sqlPro);
+		$totalPro = mysqli_num_rows($quPro);
+		$query_str = '?cat_id='.$_GET['cat_id'];
+
+		if(!isset($_GET['catsub_id'])){
+			$rowCatSubFide = get_redirect_product($conn,$cat_id);
+			header("Location:product.php?cat_id=".$_GET['cat_id']."&catsub_id=".encode($rowCatSubFide,LIAM_COINS_KEY));
+		}
+	
+	}else{
+		header("Location:index.php?action=failed");
+	}
+	
+	if(isset($_GET['catsub_id']) && $_GET['catsub_id'] != ""){
+		$cat_id = decode($_GET['cat_id'],LIAM_COINS_KEY);
+		$catsub_id = decode($_GET['catsub_id'],LIAM_COINS_KEY);
+		$sqlPro = "SELECT * FROM `lc_product` WHERE status = '1' AND category = '".$cat_id."' AND category_sub = '".$catsub_id."' ORDER BY id DESC";
+		$quPro = mysqli_query($conn,$sqlPro);
+		$totalPro = mysqli_num_rows($quPro);
+		$query_str = '?cat_id='.$_GET['cat_id'].'&catsub_id='.$_GET['catsub_id'];
+
+	}
+
+	if(!isset($_GET['page']) || (isset($_GET['page']) && $_GET['page']==1)){   
+		$_GET['page']=1;   
+		$step_num=0;
+		$s_page = 0;    
+	}else{   
+		$s_page = $_GET['page']-1;
+		$step_num=$_GET['page']-1;  
+		$s_page = $s_page*$e_page;
+	}   
+
+	$sqlPro.=" LIMIT ".$s_page.",$e_page";
+	$quProS = mysqli_query($conn,$sqlPro);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Product</title>
+	<title>Product - </title>
 	<?php include_once('head_meta.php');?>
 </head>
 <body class="animsition">
@@ -19,44 +70,75 @@
 
 	<?php include_once('cart.php');?>	
 
+	<!-- breadcrumb -->
+	<div class="container">
+		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+			<a href="index.php" class="stext-109 cl8 hov-cl1 trans-04">
+				<?php echo HOME;?>
+				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+			</a>
+
+			<a href="product.php?cat_id=<?php echo encode($cat_id,LIAM_COINS_KEY);?>" class="stext-109 cl8 hov-cl1 trans-04">
+				<?php echo get_category_name($conn,$cat_id);?>
+				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+			</a>
+
+			<?php
+			if(isset($_GET['catsub_id']) && $_GET['catsub_id'] != ""){
+			?>
+			<a href="product.php?cat_id=<?php echo encode($cat_id,LIAM_COINS_KEY);?>&catsub_id=<?php echo encode($catsub_id,LIAM_COINS_KEY);?>" class="stext-109 cl8 hov-cl1 trans-04">
+				<?php echo get_category_sub_name($conn,$catsub_id);?>
+			</a>
+			<?php
+			}
+			?>
+		</div>
+	</div>
+
 	
 	<!-- Product -->
-	<div class="bg0 m-t-23 p-b-140">
+	<div class="bg0 m-t-23 p-b-140 p-t-50">
 		<div class="container">
 
 			<div class="row isotope-grid">
 
 			<?php
-			for($i=0;$i<16;$i++){
+			while($rowProS = mysqli_fetch_array($quProS, MYSQLI_ASSOC)){ // วนลูปแสดงรายการ
+				$num++;
 				?>
 				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
 					<!-- Block2 -->
 					<div class="block2">
 						<div class="block2-pic hov-img0">
-							<img src="images/product-01.jpg" alt="IMG-PRODUCT">
+						<?php
+                            $proImages = '';
+                            if(!empty($rowProS['images'])){
+                                $proImages = 'uploads/product/'.$rowProS['images'];
+                            }else{
+                                $proImages = 'uploads/product/none.jpg';
+                            }
+                        ?>
+                        	<img src="<?php echo $proImages;?>" alt="<?php echo $rowProS['name'];?>">
 
-							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+							<!-- <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
 								Quick View
+							</a> -->
+							<a href="product-detail.php?id=<?php echo encode($rowProS['id'],LIAM_COINS_KEY);?>" class="block2-btn flex-c-m stext-103 cl2 size-102 bg1 bor2 hov-btn1 p-lr-15 trans-04">
+								<?php echo QUICK_VIEW;?>
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
-								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									British India 10 Rupees J.B.Taylor 1938 Rare Banknote (8)
+								<a href="product-detail.php?id=<?php echo encode($rowProS['id'],LIAM_COINS_KEY);?>" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+									<?php echo $rowProS['name'];?>
 								</a>
 
 								<span class="stext-105 cl3">
-									₹3,950
+									<?php echo LIAM_COINS_CURRENCY.number_format($rowProS['price'],2);?>
 								</span>
 							</div>
 
-							<!-- <div class="block2-txt-child2 flex-r p-t-3">
-								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-									<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON">
-									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON">
-								</a>
-							</div> -->
 						</div>
 					</div>
 				</div>
@@ -67,11 +149,21 @@
 			</div>
 
 			<!-- Load more -->
-			<!-- <div class="flex-c-m flex-w w-full p-t-45">
-				<a href="#" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
-					Load More
-				</a>
-			</div> -->
+			<div class="flex-c-m flex-w w-full p-t-45">
+				<?php
+
+					if($totalPro > 8){
+						$pageN = 0;
+						if(isset($_GET['page'])){
+							$pageN = $_GET['page']; 
+						}else{
+							$pageN = 1;
+						}
+						page_navi($totalPro,$pageN,$e_page,$query_str);
+					}
+					
+				?>
+			</div>
 		</div>
 	</div>
 		
@@ -183,6 +275,19 @@
 	</script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
+
+	<!-- <script src="js/js.scrollPagination.js"></script>
+	<script>
+		$(document).loadScrollData(0,{
+			limit		:	8,
+			cat_id      :   '<?php echo $_GET['cat_id'];?>',
+			catsub_id   :   '<?php echo $_GET['catsub_id'];?>',
+			listingId	:	"#get-list-view",
+			loadMsgId	:	'#load-msg',
+			ajaxUrl		:	'include/load_product.php',
+			loadingMsg	:	'<div class="alert alert-warning p-1 text-center"><i class="fa fa-fw fa-spin fa-spinner"></i>Please Wait...!</div>',
+		});
+	</script> -->
 
 </body>
 </html>

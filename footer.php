@@ -9,32 +9,34 @@
 
                 <ul>
                     <li class="p-b-10">
-                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            Banknotes
+                    <?php $rowCatSub1 = get_redirect_product($conn,1);?>
+                        <a href="product.php?cat_id=<?php echo encode(1,LIAM_COINS_KEY);?>&catsub_id=<?php echo encode($rowCatSub1,LIAM_COINS_KEY);?>" class="stext-107 cl7 hov-cl1 trans-04">
+                            <?php echo get_category_name($conn,1);?>
                         </a>
                     </li>
 
                     <li class="p-b-10">
-                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            Coins
+                    <?php $rowCatSub2 = get_redirect_product($conn,2);?>
+                        <a href="product.php?cat_id=<?php echo encode(2,LIAM_COINS_KEY);?>&catsub_id=<?php echo encode($rowCatSub2,LIAM_COINS_KEY);?>" class="stext-107 cl7 hov-cl1 trans-04">
+                            <?php echo get_category_name($conn,2);?>
                         </a>
                     </li>
 
                     <li class="p-b-10">
-                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            Numismatics
+                        <a href="numismatics-buy-and-sell.php" class="stext-107 cl7 hov-cl1 trans-04">
+                            <?php echo NUMISMATICS;?>
                         </a>
                     </li>
 
                     <li class="p-b-10">
-                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            Auctions
+                        <a href="upcoming-auctions.php" class="stext-107 cl7 hov-cl1 trans-04">
+                            <?php echo AUCTIONS;?>
                         </a>
                     </li>
 
                     <li class="p-b-10">
-                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            investment
+                        <a href="banknotes-investment.php" class="stext-107 cl7 hov-cl1 trans-04">
+                            <?php echo INVESTMENT;?>
                         </a>
                     </li>
                 </ul>
@@ -42,31 +44,31 @@
 
             <div class="col-sm-6 col-lg-3 p-b-50">
                 <h4 class="stext-301 cl0 p-b-30">
-                    Help
+                    <?php echo HELP;?>
                 </h4>
 
                 <ul>
                     <li class="p-b-10">
                         <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            Track Order
+                            <?php echo TRACK_ORDER;?>
                         </a>
                     </li>
 
                     <li class="p-b-10">
                         <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            Returns 
+                            <?php echo RETURNS;?> 
                         </a>
                     </li>
 
                     <li class="p-b-10">
                         <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            Shipping
+                            <?php echo SHIPPING;?>
                         </a>
                     </li>
 
                     <li class="p-b-10">
                         <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            FAQs
+                            <?php echo FAQS;?>
                         </a>
                     </li>
                 </ul>
@@ -74,7 +76,7 @@
 
             <div class="col-sm-6 col-lg-3 p-b-50">
                 <h4 class="stext-301 cl0 p-b-30">
-                    GET IN TOUCH
+                   <?php echo GET_IN_TOUCH;?>
                 </h4>
 
                 <p class="stext-107 cl7 size-201">
@@ -99,7 +101,7 @@
 
             <div class="col-sm-6 col-lg-3 p-b-50">
                 <h4 class="stext-301 cl0 p-b-30">
-                    Newsletter
+                    <?php echo NEWSLETTER;?>
                 </h4>
 
                 <form>
@@ -110,7 +112,7 @@
 
                     <div class="p-t-18">
                         <button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
-                            Subscribe
+                            <?php echo SUBSCRIBE;?>
                         </button>
                     </div>
                 </form>
@@ -141,10 +143,7 @@
             </div>
 
             <p class="stext-107 cl6 txt-center">
-                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-
+                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved
             </p>
         </div>
     </div>

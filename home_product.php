@@ -1,9 +1,35 @@
+<?php
+	$num = 0;
+	$e_page=16; // กำหนด จำนวนรายการที่แสดงในแต่ละหน้า   
+	$step_num=0;
+	$sqlPro = "";
+	$totalPro = 0;
+    $query_str = '';
+    
+    $sqlPro = "SELECT * FROM `lc_product` WHERE status = '1' ORDER BY id DESC";
+    $quPro = mysqli_query($conn,$sqlPro);
+    $totalPro = mysqli_num_rows($quPro);
+
+    if(!isset($_GET['page']) || (isset($_GET['page']) && $_GET['page']==1)){   
+		$_GET['page']=1;   
+		$step_num=0;
+		$s_page = 0;    
+	}else{   
+		$s_page = $_GET['page']-1;
+		$step_num=$_GET['page']-1;  
+		$s_page = $s_page*$e_page;
+	}   
+
+	$sqlPro.=" LIMIT ".$s_page.",$e_page";
+	$quProS = mysqli_query($conn,$sqlPro);
+
+?>
 <!-- Product -->
 <section class="bg0 p-t-23 p-b-140">
     <div class="container">
-        <div class="p-b-20 text-center">
+        <div class="p-t-50 p-b-50 text-center">
             <h3 class="ltext-103 cl5">
-                NEW ARRIVALS !!
+                <?php echo NEW_PRODUCTS_ARRIVALS;?>
             </h3>
         </div>
 
@@ -12,36 +38,40 @@
         <div class="row isotope-grid">
 
         <?php 
-        for($i=0;$i<8;$i++){
+        while($rowPro = mysqli_fetch_array($quProS, MYSQLI_ASSOC)){
             ?>
             <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
                 <!-- Block2 -->
                 <div class="block2">
                     <div class="block2-pic hov-img0">
-                        <img src="images/product-01.jpg" alt="IMG-PRODUCT">
+                        <?php
+                            $proImages = '';
+                            if(!empty($rowPro['images'])){
+                                $proImages = 'uploads/product/'.$rowPro['images'];
+                            }else{
+                                $proImages = 'uploads/product/none.jpg';
+                            }
+                        ?>
+                        <img src="<?php echo $proImages;?>" alt="<?php echo $rowPro['name'];?>">
 
-                        <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                            Quick View
+                        <!-- <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg1 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+                            <?php echo QUICK_VIEW;?>
+                        </a> -->
+                        <a href="product-detail.php?id=<?php echo encode($rowPro['id'],LIAM_COINS_KEY);?>" class="block2-btn flex-c-m stext-103 cl2 size-102 bg1 bor2 hov-btn1 p-lr-15 trans-04">
+                            <?php echo QUICK_VIEW;?>
                         </a>
                     </div>
 
                     <div class="block2-txt flex-w flex-t p-t-14">
                         <div class="block2-txt-child1 flex-col-l ">
-                            <a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                British India 10 Rupees J.B.Taylor 1938 Rare Banknote (8)
+                            <a href="product-detail.php?id=<?php echo encode($rowPro['id'],LIAM_COINS_KEY);?>" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                <?php echo $rowPro['name'];?>
                             </a>
 
                             <span class="stext-105 cl3">
-                                ₹3,950
+                                <?php echo LIAM_COINS_CURRENCY.number_format($rowPro['price'],2);?>
                             </span>
                         </div>
-
-                        <!-- <div class="block2-txt-child2 flex-r p-t-3">
-                            <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                                <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON">
-                                <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON">
-                            </a>
-                        </div> -->
                     </div>
                 </div>
             </div>
@@ -52,10 +82,21 @@
         </div>
 
         <!-- Load more -->
-        <!-- <div class="flex-c-m flex-w w-full p-t-45">
-            <a href="#" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
-                Load More
-            </a>
-        </div> -->
+        <div class="flex-c-m flex-w w-full p-t-45">
+            <?php
+
+                if($totalPro > 16){
+                    $pageN = 0;
+                    if(isset($_GET['page'])){
+                        $pageN = $_GET['page']; 
+                    }else{
+                        $pageN = 1;
+                    }
+                    page_navi($totalPro,$pageN,$e_page,$query_str);
+                }
+                
+            ?>
+        </div>
+            
     </div>
 </section>

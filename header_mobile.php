@@ -2,7 +2,7 @@
 <div class="wrap-header-mobile">
     <!-- Logo moblie -->		
     <div class="logo-mobile">
-        <a href="index.php"><img src="images/icons/logo-01.png" alt="IMG-LOGO"></a>
+        <a href="index.php"><img src="images/icons/liam-coins-logo.png" alt="Liam Coins"></a>
     </div>
 
     <!-- Icon header -->

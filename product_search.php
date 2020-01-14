@@ -10,30 +10,13 @@
 	$totalPro = 0;
 	$query_str = '';
 
-	if(isset($_GET['cat_id']) && $_GET['cat_id'] != ""){
-		$cat_id = decode($_GET['cat_id'],LIAM_COINS_KEY);
-		$sqlPro = "SELECT * FROM `lc_product` WHERE status = '1' AND category = '".$cat_id."' ORDER BY id DESC";
+	if(isset($_GET['keyword']) && $_GET['keyword'] != ""){
+		$sqlPro = "SELECT * FROM `lc_product` WHERE `status` = '1' AND `name` LIKE '%".$_GET['keyword']."%' ORDER BY id DESC";
 		$quPro = mysqli_query($conn,$sqlPro);
 		$totalPro = mysqli_num_rows($quPro);
-		$query_str = '?cat_id='.$_GET['cat_id'];
-
-		if(!isset($_GET['catsub_id'])){
-			$rowCatSubFide = get_redirect_product($conn,$cat_id);
-			header("Location:product.php?cat_id=".$_GET['cat_id']."&catsub_id=".encode($rowCatSubFide,LIAM_COINS_KEY));
-		}
-	
+		$query_str = '?keyword='.$_GET['keyword'];
 	}else{
-		header("Location:index.php?action=failed");
-	}
-	
-	if(isset($_GET['catsub_id']) && $_GET['catsub_id'] != ""){
-		$cat_id = decode($_GET['cat_id'],LIAM_COINS_KEY);
-		$catsub_id = decode($_GET['catsub_id'],LIAM_COINS_KEY);
-		$sqlPro = "SELECT * FROM `lc_product` WHERE status = '1' AND category = '".$cat_id."' AND category_sub = '".$catsub_id."' ORDER BY id DESC";
-		$quPro = mysqli_query($conn,$sqlPro);
-		$totalPro = mysqli_num_rows($quPro);
-		$query_str = '?cat_id='.$_GET['cat_id'].'&catsub_id='.$_GET['catsub_id'];
-
+		header("Location:index.php");
 	}
 
 	if(!isset($_GET['page']) || (isset($_GET['page']) && $_GET['page']==1)){   
@@ -77,21 +60,13 @@
 				<?php echo HOME;?>
 				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
 			</a>
-
-			<a href="product.php?cat_id=<?php echo encode($cat_id,LIAM_COINS_KEY);?>" class="stext-109 cl8 hov-cl1 trans-04">
-				<?php echo get_category_name($conn,$cat_id);?>
+			<span class="stext-109 cl4">
+				<?php echo PRODUCT_SEARCH;?>
 				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-			</a>
-
-			<?php
-			if(isset($_GET['catsub_id']) && $_GET['catsub_id'] != ""){
-			?>
-			<a href="product.php?cat_id=<?php echo encode($cat_id,LIAM_COINS_KEY);?>&catsub_id=<?php echo encode($catsub_id,LIAM_COINS_KEY);?>" class="stext-109 cl8 hov-cl1 trans-04">
-				<?php echo get_category_sub_name($conn,$catsub_id);?>
-			</a>
-			<?php
-			}
-			?>
+			</span>
+			<span class="stext-109 cl4">
+				<?php echo $_GET['keyword'];?>
+			</span>
 		</div>
 	</div>
 
@@ -100,53 +75,75 @@
 	<div class="bg0 m-t-23 p-b-140 p-t-50">
 		<div class="container">
 
-			<div class="row isotope-grid">
-
 			<?php
-			while($rowProS = mysqli_fetch_array($quProS, MYSQLI_ASSOC)){ // วนลูปแสดงรายการ
-				$num++;
+			if($totalPro > 0){
+
 				?>
-				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-					<!-- Block2 -->
-					<div class="block2">
-						<div class="block2-pic hov-img0">
-						<?php
-                            $proImages = '';
-                            if(!empty($rowProS['images'])){
-                                $proImages = 'uploads/product/'.$rowProS['images'];
-                            }else{
-                                $proImages = 'uploads/product/none.jpg';
-                            }
-                        ?>
-                        	<img src="<?php echo $proImages;?>" alt="<?php echo $rowProS['name'];?>">
+				<div class="row isotope-grid">
+				<?php
 
-							<!-- <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
-							</a> -->
-							<a href="product-detail.php?id=<?php echo encode($rowProS['id'],LIAM_COINS_KEY);?>" class="block2-btn flex-c-m stext-103 cl2 size-102 bg1 bor2 hov-btn1 p-lr-15 trans-04">
-								<?php echo QUICK_VIEW;?>
-							</a>
-						</div>
+				while($rowProS = mysqli_fetch_array($quProS, MYSQLI_ASSOC)){ // วนลูปแสดงรายการ
+					$num++;
+					?>
+					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
+						<!-- Block2 -->
+						<div class="block2">
+							<div class="block2-pic hov-img0">
+							<?php
+								$proImages = '';
+								if(!empty($rowProS['images'])){
+									$proImages = 'uploads/product/'.$rowProS['images'];
+								}else{
+									$proImages = 'uploads/product/none.jpg';
+								}
+							?>
+								<img src="<?php echo $proImages;?>" alt="<?php echo $rowProS['name'];?>">
 
-						<div class="block2-txt flex-w flex-t p-t-14">
-							<div class="block2-txt-child1 flex-col-l ">
-								<a href="product-detail.php?id=<?php echo encode($rowProS['id'],LIAM_COINS_KEY);?>" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									<?php echo $rowProS['name'];?>
+								<!-- <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+									Quick View
+								</a> -->
+								<a href="product-detail.php?id=<?php echo encode($rowProS['id'],LIAM_COINS_KEY);?>" class="block2-btn flex-c-m stext-103 cl2 size-102 bg1 bor2 hov-btn1 p-lr-15 trans-04">
+									<?php echo QUICK_VIEW;?>
 								</a>
-
-								<span class="stext-105 cl3">
-									<?php echo LIAM_COINS_CURRENCY.number_format($rowProS['price'],2);?>
-								</span>
 							</div>
 
+							<div class="block2-txt flex-w flex-t p-t-14">
+								<div class="block2-txt-child1 flex-col-l ">
+									<a href="product-detail.php?id=<?php echo encode($rowProS['id'],LIAM_COINS_KEY);?>" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+										<?php echo $rowProS['name'];?>
+									</a>
+
+									<span class="stext-105 cl3">
+										<?php echo LIAM_COINS_CURRENCY.number_format($rowProS['price'],2);?>
+									</span>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<?php
+				}
+				?>
+				</div>
+				<?php
+			}else{
+				?>
+				<!-- Content page -->
+				<div class="row p-b-30 p-t-30">
+					<div class="col-md-12 col-lg-12">
+						<div class="p-t-7 p-r-85 p-r-15-lg p-r-0-md">
+							<h3 class="mtext-111 cl2 p-b-16 text-center">
+								No products were found matching your selection.
+							</h3>
 						</div>
 					</div>
 				</div>
+
 				<?php
 			}
 			?>
 
-			</div>
+			
 
 			<!-- Load more -->
 			<div class="flex-c-m flex-w w-full p-t-45">

@@ -19,7 +19,15 @@
     define("RETURNS","Returns");
     define("SHIPPING","Shipping");
     define("FAQS","FAQs");
+
+    define("MY_ACCOUNT","My Account");
+    define("SHIP_ADDRESS","Address");
+    define("ORDER_HISTORY","Order History");
+    define("ORDER_TRACKING","Order Tracking");
+    define("LOGOUT","Logout"); 
     
+    define("LOGIN_MSG","Login to Liam Coins");
+    define("LOGIN_ERROR_MSG","The email or password you entered is incorrect.");
 
     define("BANKNOTES_INVESTMENT","Banknotes investment");
     define("COINS_INVESTMENT","Coins Investment");
@@ -40,6 +48,17 @@
     
     define("HELP","Help");
     define("GET_IN_TOUCH","GET IN TOUCH");
+
+    define("PRODUCT_SEARCH","Search Products");
+    define("NEW_CUSTOMER_REGISTER","New customer registration");
+
+    define("ERROR","Error");
+    define("REGISTER_EMAIL_DUPLICATE","An account is already registered with your email address. Please log in.");
+    
+
+
+    
+    
     
     
 

@@ -12,9 +12,22 @@
                     <?php echo strtoupper(ABOUT_US);?>
                 </a>
 
-                <a href="login.php" class="flex-c-m trans-04 p-lr-25">
-                    <?php echo strtoupper(LOGIN);?>
-                </a>
+                <?php 
+                 if(isset($_SESSION['cus_email']) && $_SESSION['cus_email'] != ""){
+                    ?>
+                    <a href="my-account.php" class="flex-c-m p-lr-10 trans-04">
+                        <?php echo strtoupper(MY_ACCOUNT);?>
+                    </a>
+                    <?php
+                 }
+                 else{
+                    ?>
+                    <a href="login.php" class="flex-c-m p-lr-10 trans-04">
+                        <?php echo strtoupper(LOGIN);?>
+                    </a>
+                    <?php
+                 }
+                ?>
 
                 <!-- <a href="#" class="flex-c-m trans-04 p-lr-25">
                     EN

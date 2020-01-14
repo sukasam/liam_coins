@@ -21,6 +21,9 @@
                 }
                 ?>
             </ul>
+            <span class="arrow-main-menu">
+                <i class="fa fa-angle-down" aria-hidden="true"></i>
+            </span>
         </li>
 
         <li>
@@ -37,6 +40,9 @@
                 }
                 ?>
             </ul>
+            <span class="arrow-main-menu">
+                <i class="fa fa-angle-down" aria-hidden="true"></i>
+            </span>
         </li>
 
         <li>
@@ -45,6 +51,9 @@
                 <li><a href="numismatics-buy-and-sell.php"><?php echo BUY_AND_SELL;?></a></li>
                 <li><a href="numismatics-service.php"><?php echo NUMISMATIC_SERVICE;?></a></li>
             </ul>
+            <span class="arrow-main-menu">
+                <i class="fa fa-angle-down" aria-hidden="true"></i>
+            </span>
         </li>
 
         <li>
@@ -54,6 +63,9 @@
                 <li><a href="intresting-auctions-results.php"><?php echo INTERESTING_AUCTIONS_RESULTS;?></a></li>
                 <li><a href="auctions-bid.php"><?php echo BID;?></a></li>
             </ul>
+            <span class="arrow-main-menu">
+                <i class="fa fa-angle-down" aria-hidden="true"></i>
+            </span>
         </li>
 
         <li>
@@ -62,14 +74,39 @@
                 <li><a href="banknotes-investment.php"><?php echo BANKNOTES_INVESTMENT;?></a></li>
                 <li><a href="coins-investment.php"><?php echo COINS_INVESTMENT;?></a></li>
             </ul>
+            <span class="arrow-main-menu">
+                <i class="fa fa-angle-down" aria-hidden="true"></i>
+            </span>
         </li>
 
         <li>
             <a href="about-us.php"><?php echo ABOUT_US;?></a>
         </li>
-
-        <li>
-            <a href="register.php"><?php echo REGISTER;?></a>
-        </li>
+        
+        <?php 
+            if(isset($_SESSION['cus_email']) && $_SESSION['cus_email'] != ""){
+                ?>
+                <li>
+                    <a href="my-account.php"><?php echo MY_ACCOUNT;?></a>
+                    <ul class="sub-menu">
+                        <li><a href="my-address.php"><?php echo SHIP_ADDRESS;?></a></li>
+                        <li><a href="my-order.php"><?php echo ORDER_HISTORY;?></a></li>
+                        <li><a href="my-tracking"><?php echo ORDER_TRACKING;?></a></li>
+                        <li><a href="logout.php"><?php echo LOGOUT;?></a></li>
+                    </ul>
+                    <span class="arrow-main-menu">
+                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                </li>
+                <?php
+            }
+            else{
+                ?>
+                <li>
+                    <a href="register.php"><?php echo REGISTER;?></a>
+                </li>
+                <?php
+            }
+        ?>
     </ul>
 </div>

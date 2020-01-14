@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Register</title>
+	<title>Login</title>
 	<?php include_once('head_meta.php');?>
 </head>
 <body class="animsition">
@@ -40,9 +40,9 @@
 		<div class="container">
 		<div class="flex-w flex-tr">
 				<div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md" style="margin: 0 auto;">
-					<form name="frm" method="post" action="control/register.php">
+					<form name="frm" method="post" action="control/login.php">
 						<h4 class="mtext-105 cl2 txt-center p-b-30">
-							<?php echo NEW_CUSTOMER_REGISTER;?>
+							<?php echo LOGIN_MSG;?>
 						</h4>
 						<div class="bor8 m-b-20 how-pos4-parent">
 							<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="email" name="cus_email" placeholder="Your Email Address" required>
@@ -69,7 +69,7 @@
 			if($_GET['action'] === "failure"){
 				?>
 				<ul class="msg-error" role="alert">
-					<li><strong><?php echo ERROR;?>:</strong> <?php echo REGISTER_EMAIL_DUPLICATE;?></li>
+					<li><strong><?php echo ERROR;?>:</strong> <?php echo LOGIN_ERROR_MSG;?></li>
 				</ul>
 				<?php
 			}

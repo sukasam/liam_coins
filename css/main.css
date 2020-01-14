@@ -3359,3 +3359,40 @@ input.num-product::-webkit-inner-spin-button {
   background-color: #e9ecef;
   border-color: #ddd;
 }
+
+.msg-error, .msg .msg-error, .msg-page .msg-error {
+  color: #ffffff;
+  background: #b81c23;
+  text-align: left;
+}
+
+.msg-error, .msg-message, .msg-info, .msg .msg-error, .msg-page .msg-error, .msg .msg-message, .msg .msg-info, .msg-page .msg-message, .msg-page .msg-info {
+  cursor: pointer;
+  text-shadow: none;
+  padding: 20px 150px 20px 60px;
+  font-size: 0.875em;
+  line-height: 1.714em;
+  margin: 0;
+  width: 100%;
+  list-style: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  opacity: 1;
+  visibility: visible;
+  z-index: 9999;
+  -webkit-transition: all .3s ease;
+  -o-transition: all .3s ease;
+  transition: all .3s ease;
+}
+
+.msg-error, .msg-info, .msg-message {
+  padding: 1em 2em 1em 3.5em;
+  position: relative;
+  background-color: #ff0000;
+  color: #ffffff;
+  border-top: 3px solid #ff0000;
+  list-style: none outside;
+  width: auto;
+  word-wrap: break-word;
+}

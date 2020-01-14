@@ -13,9 +13,22 @@
                     <?php echo strtoupper(ABOUT_US);?>
                 </a>
 
-                <a href="login.php" class="flex-c-m p-lr-10 trans-04">
-                    <?php echo strtoupper(LOGIN);?>
-                </a>
+                <?php 
+                 if(isset($_SESSION['cus_email']) && $_SESSION['cus_email'] != ""){
+                    ?>
+                    <a href="my-account.php" class="flex-c-m p-lr-10 trans-04">
+                        <?php echo strtoupper(MY_ACCOUNT);?>
+                    </a>
+                    <?php
+                 }
+                 else{
+                    ?>
+                    <a href="login.php" class="flex-c-m p-lr-10 trans-04">
+                        <?php echo strtoupper(LOGIN);?>
+                    </a>
+                    <?php
+                 }
+                ?>
 
                 <!-- <a href="#" class="flex-c-m p-lr-10 trans-04">
                     EN
@@ -112,9 +125,31 @@
             <a href="about-us.php"><?php echo ABOUT_US;?></a>
         </li>
 
-        <li>
-            <a href="register.php"><?php echo REGISTER;?></a>
-        </li>
+        <?php 
+            if(isset($_SESSION['cus_email']) && $_SESSION['cus_email'] != ""){
+                ?>
+                <li>
+                    <a href="my-account.php"><?php echo MY_ACCOUNT;?></a>
+                    <ul class="sub-menu-m">
+                        <li><a href="my-address.php"><?php echo SHIP_ADDRESS;?></a></li>
+                        <li><a href="my-order.php"><?php echo ORDER_HISTORY;?></a></li>
+                        <li><a href="my-tracking"><?php echo ORDER_TRACKING;?></a></li>
+                        <li><a href="logout.php"><?php echo LOGOUT;?></a></li>
+                    </ul>
+                    <span class="arrow-main-menu">
+                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                </li>
+                <?php
+            }
+            else{
+                ?>
+                <li>
+                    <a href="register.php"><?php echo REGISTER;?></a>
+                </li>
+                <?php
+            }
+        ?>
 
     </ul>
 </div>

@@ -36,44 +36,6 @@
 
 		<?php include_once("modal_search.php");?>
 
-	<script>
-	function chk_shipaddress(){
-		// Get the checkbox
-		var checkBox = document.getElementById("chkshipaddress");
-		// Get the output text
-		var boxShipAdd = document.getElementById("boxShipAdd");
-
-		// If the checkbox is checked, display the output text
-		if (checkBox.checked == true){
-			boxShipAdd.style.display = "block";
-			document.getElementById("type_address").value= "0";
-		} else {
-			boxShipAdd.style.display = "none";
-			document.getElementById("type_address").value= "1";
-		}
-	}
-
-	function chk_login(){
-
-		var frmLogin = document.getElementById("frmLogin");
-		frmLogin.style.display = "block";
-	}
-	
-
-	function chk_termcondition(){
-		// Get the checkbox
-		var checkBox = document.getElementById("chktermcondition");
-		// Get the output text
-		var btPayment = document.getElementById("btPayment");
-
-		// If the checkbox is checked, display the output text
-		if (checkBox.checked == true){
-			document.getElementById("btPayment").disabled = false;
-		} else {
-			document.getElementById("btPayment").disabled = true;
-		}
-	}
-	</script>
 	</header>
 
 	<?php include_once('cart.php');?>
@@ -87,7 +49,7 @@
 			</a>
 
 			<span class="stext-109 cl4">
-				Checkout
+				Order Summary
 			</span>
 		</div>
 	</div>
@@ -100,7 +62,33 @@
 
 					<div class="col-lg-10 col-xl-10 m-lr-auto m-b-50">
 						<div class="m-l-25 m-r--38 m-lr-0-xl">
+
 							<h4 class="mtext-109 cl2 p-b-40 text-center p-t-20">
+								Thank you. Your order has been received.
+							</h4>
+
+							<div class="wrap-table-shopping-cart">
+								<table class="table-shopping-cart">
+									<tr class="table_head">
+										<th class="column-1 text-center" style="width: 20%;">ORDER NUMBER</th>
+										<th class="column-2 text-center" style="width: 20%;">DATE</th>
+										<th class="column-3 text-center" style="width: 20%;">EMAIL:</th>
+										<th class="column-4 text-center" style="width: 20%;">TOTAL</th>
+										<th class="column-5 text-center" style="width: 20%;">PAYMENT METHOD</th>
+									</tr>
+
+									<tr class="table_row" style="height: 60px;">
+										<td class="column-1 text-center" style="padding-bottom: 0px;"><?php echo $orderID;?></td>
+										<td class="column-2 text-center" style="padding-bottom: 0px;"><?php echo substr($rowCusOrder['order_date'],0,10);?></td>
+										<td class="column-3 text-center" style="padding-bottom: 0px;"><?php echo $rowCusOrder['bill_email'];?></td>
+										<td class="column-4 text-center" style="padding-bottom: 0px;"><?php echo number_format($rowCusOrder['order_total'],2);?></td>
+										<td class="column-5 text-center" style="padding-bottom: 0px;"><?php echo 'PayPal';?></td>
+									</tr>
+
+								</table>
+							</div>
+
+							<h4 class="mtext-109 cl2 p-b-40 text-center p-t-70">
 								Order Details
 							</h4>
 							<div class="wrap-table-shopping-cart">
@@ -120,7 +108,7 @@
 									$qyOrderDetail = mysqli_query($conn,$sqlOrderDetail);
 									while ($rowOrderDetail = mysqli_fetch_assoc($qyOrderDetail)){
 
-											$total_price = ((float)$total_price + (float)$rowOrderDetail['pro_price']);
+											$total_price = ((float)$total_price + ((float)$rowOrderDetail['pro_price']*(float)$rowOrderDetail['pro_qty']));
 										
 											$proImages = '';
 											if(!empty($rowOrderDetail['pro_img'])){
@@ -186,6 +174,30 @@
 									</div>
 
 									<div class="flex-w flex-t p-t-27 bor12 p-b-27">
+
+										<div class="size-208">
+											<span class="stext-101 cl2">
+												PAYMENT STATUS:
+											</span>
+										</div>
+
+										<div class="size-209 p-t-1" style="text-align: right;">
+											<span class="stext-110 cl2">
+												<?php 
+													if(decode($rowCusOrder['payment_status'],LIAM_COINS_KEY) == '1'){
+														echo '<span style="color: #0d7d00;">Paid<span>';
+													}else if(decode($rowCusOrder['payment_status'],LIAM_COINS_KEY) == '2'){
+														echo '<span style="color: #ff0000;">Cancel<span>';
+													}else{
+														echo '<span style="color: #0d31b7;">Pending<span>';
+													}
+												?>
+											</span>
+										</div>
+
+									</div>
+
+									<div class="flex-w flex-t p-t-27 bor12 p-b-27">
 										<div class="size-208">
 											<span class="stext-101 cl2">
 												TOTAL:
@@ -203,10 +215,34 @@
 
 									<div class="row">
 										<div class="col-12 col-lg-6">
-dsds
+											<div>
+												<h4 class="mtext-109 cl2 p-b-20">
+													Billing Address
+												</h4>
+												<?php if($rowCusOrder['bill_fname'] != ""){?><p><?php echo $rowCusOrder['bill_fname'].' '.$rowCusOrder['bill_lname'];?></p><?php }?>
+												<?php if($rowCusOrder['bill_company'] != ""){?><p><?php echo $rowCusOrder['bill_company'];?></p><?php }?>
+												<?php if($rowCusOrder['bill_address1'] != ""){?><p><?php echo $rowCusOrder['bill_address1'].' '.$rowCusOrder['bill_address2'];?></p><?php }?>
+												<?php if($rowCusOrder['bill_city'] != ""){?><p><?php echo $rowCusOrder['bill_city'];?></p><?php }?>
+												<?php if($rowCusOrder['bill_country'] != ""){?><p><?php echo $rowCusOrder['bill_country'];?></p><?php }?>
+												<?php if($rowCusOrder['bill_zipcode'] != ""){?><p><?php echo $rowCusOrder['bill_zipcode'];?></p><?php }?>
+												<?php if($rowCusOrder['bill_phone'] != ""){?><p><?php echo $rowCusOrder['bill_phone'];?></p><?php }?>
+												<?php if($rowCusOrder['bill_email'] != ""){?><p><?php echo $rowCusOrder['bill_email'];?></p><?php }?>
+											</div>
 										</div>
 										<div class="col-12 col-lg-6">
-sdsd
+											<div>
+												<h4 class="mtext-109 cl2 p-b-20">
+													Shipping Address:
+												</h4>
+												<?php if($rowCusOrder['ship_fname'] != ""){?><p><?php echo $rowCusOrder['ship_fname'].' '.$rowCusOrder['ship_lname'];?></p><?php }?>
+												<?php if($rowCusOrder['ship_company'] != ""){?><p><?php echo $rowCusOrder['ship_company'];?></p><?php }?>
+												<?php if($rowCusOrder['ship_address1'] != ""){?><p><?php echo $rowCusOrder['ship_address1'].' '.$rowCusOrder['ship_address2'];?></p><?php }?>
+												<?php if($rowCusOrder['ship_city'] != ""){?><p><?php echo $rowCusOrder['ship_city'];?></p><?php }?>
+												<?php if($rowCusOrder['ship_country'] != ""){?><p><?php echo $rowCusOrder['ship_country'];?></p><?php }?>
+												<?php if($rowCusOrder['ship_zipcode'] != ""){?><p><?php echo $rowCusOrder['ship_zipcode'];?></p><?php }?>
+												<?php if($rowCusOrder['ship_phone'] != ""){?><p><?php echo $rowCusOrder['ship_phone'];?></p><?php }?>
+												<?php if($rowCusOrder['ship_email'] != ""){?><p><?php echo $rowCusOrder['ship_email'];?></p><?php }?>
+											</div>
 										</div>
 									</div>
 

@@ -54,6 +54,29 @@
 <head>
 	<title>Product - </title>
 	<?php include_once('head_meta.php');?>
+
+	<script>
+	function addToCart(itemId,itemName){
+
+		$.post("include/call_api.php",
+		{
+			action: "addToCart",
+			itemId: itemId
+		},
+		function(data, status){
+
+			if(status === "success"){
+				// var dataSet = data.split("|");
+				// document.getElementById('pro_category_sub').innerHTML= dataSet[1];
+				// $("#pro_category_sub").val('').trigger('change')
+				swal(itemName, "Added to cart !", "success");
+				setTimeout(function(){ location.reload(); }, 1000);
+				
+			}
+		});
+		
+	}
+	</script>
 </head>
 <body class="animsition">
 	
@@ -118,14 +141,18 @@
                                 $proImages = 'uploads/product/none.jpg';
                             }
                         ?>
-                        	<img src="<?php echo $proImages;?>" alt="<?php echo $rowProS['name'];?>">
+                        	<a href="product-detail.php?id=<?php echo encode($rowProS['id'],LIAM_COINS_KEY);?>"><img src="<?php echo $proImages;?>" alt="<?php echo $rowProS['name'];?>"></a>
 
-							<!-- <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
-							</a> -->
-							<a href="product-detail.php?id=<?php echo encode($rowProS['id'],LIAM_COINS_KEY);?>" class="block2-btn flex-c-m stext-103 cl2 size-102 bg1 bor2 hov-btn1 p-lr-15 trans-04">
+							<!-- <a href="product-detail.php?id=<?php echo encode($rowProS['id'],LIAM_COINS_KEY);?>" class="block2-btn flex-c-m stext-103 cl2 size-102 bg1 bor2 hov-btn1 p-lr-15 trans-04">
 								<?php echo QUICK_VIEW;?>
-							</a>
+							</a> -->
+							
+							<!-- <a href="product-detail.php?id=<?php echo encode($rowProS['id'],LIAM_COINS_KEY);?>" class="block2-btn flex-c-m stext-103 cl2 size-102 bg1 bor2 hov-btn1 p-lr-15 trans-04">
+								ADD TO CART
+							</a> -->
+
+							<button tyle="button" class="block2-btn flex-c-m stext-103 cl2 size-102 bg1 bor2 hov-btn1 p-lr-15 trans-04" onclick="addToCart('<?php echo $rowProS['id'];?>','<?php echo $rowProS['name'];?>')">ADD TO CART</button>
+
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">

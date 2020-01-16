@@ -3366,7 +3366,7 @@ input.num-product::-webkit-inner-spin-button {
   text-align: left;
 }
 
-.msg-error, .msg-message, .msg-info, .msg .msg-error, .msg-page .msg-error, .msg .msg-message, .msg .msg-info, .msg-page .msg-message, .msg-page .msg-info {
+.msg-error, .msg-success, .msg-message, .msg-info, .msg .msg-error, .msg-page .msg-error, .msg .msg-message, .msg .msg-info, .msg-page .msg-message, .msg-page .msg-info {
   cursor: pointer;
   text-shadow: none;
   padding: 20px 150px 20px 60px;
@@ -3384,6 +3384,7 @@ input.num-product::-webkit-inner-spin-button {
   -webkit-transition: all .3s ease;
   -o-transition: all .3s ease;
   transition: all .3s ease;
+  margin-top: 20px;
 }
 
 .msg-error, .msg-info, .msg-message {
@@ -3395,4 +3396,26 @@ input.num-product::-webkit-inner-spin-button {
   list-style: none outside;
   width: auto;
   word-wrap: break-word;
+}
+
+.msg-success {
+  padding: 1em 2em 1em 3.5em;
+  position: relative;
+  background-color: #8fae1b;
+  color: #ffffff;
+  border-top: 3px solid #8fae1b;
+  list-style: none outside;
+  width: auto;
+  word-wrap: break-word;
+}
+
+.hide{
+  display: none;
+}
+
+input, textarea{
+  display: block;
+  outline: none;
+  border: 1px solid #dddddd;
+  margin-bottom: 20px;
 }

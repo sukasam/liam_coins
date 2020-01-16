@@ -3,8 +3,8 @@
      if($_SERVER['REQUEST_METHOD'] === 'POST'){
         if(isset($_POST['cus_email'],$_POST['cus_password'],$_POST['_token'])){
             if(Token::check($_POST['_token'])){
-                $cus_email = $_POST['cus_email'];
-                $cus_passwordT = encode($_POST['cus_password'],LIAM_COINS_KEY);
+                $cus_email = mysqli_real_escape_string($conn,$_POST['cus_email']);
+                $cus_passwordT = mysqli_real_escape_string($conn,encode($_POST['cus_password'],LIAM_COINS_KEY));
                 
                 $sqlCustomer = "SELECT * FROM `lc_customer` WHERE `email` = '".$cus_email."' AND `status` = '1' LIMIT 1";
                 $quCustomer = mysqli_query($conn,$sqlCustomer);

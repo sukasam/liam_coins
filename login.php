@@ -1,4 +1,6 @@
-<?php include_once("include/include_app.php");?>
+<?php 
+	include_once("include/include_app.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,12 +47,12 @@
 							<?php echo LOGIN_MSG;?>
 						</h4>
 						<div class="bor8 m-b-20 how-pos4-parent">
-							<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="email" name="cus_email" placeholder="Your Email Address" required>
+							<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" style="margin-bottom: 0px;" type="email" name="cus_email" placeholder="Your Email Address" required>
 							<img class="how-pos4 pointer-none" src="images/icons/icon-email.png" alt="ICON">
 						</div>
 
 						<div class="bor8 m-b-20 how-pos4-parent">
-							<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="password" name="cus_password" placeholder="Your Password" required>
+							<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" style="margin-bottom: 0px;" type="password" name="cus_password" placeholder="Your Password" required>
 							<img class="how-pos4 pointer-none" src="images/icons/icon-password.png" alt="ICON">
 						</div>
 

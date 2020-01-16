@@ -22,6 +22,30 @@
 <head>
 	<title>Product Detail - <?php echo $rowPro['name'];?></title>
 	<?php include_once('head_meta.php');?>
+
+	<script>
+	function addToCart(itemId,itemName){
+
+		$.post("include/call_api.php",
+		{
+			action: "addToCart",
+			itemId: itemId
+		},
+		function(data, status){
+
+			if(status === "success"){
+				// var dataSet = data.split("|");
+				// document.getElementById('pro_category_sub').innerHTML= dataSet[1];
+				// $("#pro_category_sub").val('').trigger('change')
+				swal(itemName, "Added to cart !", "success");
+				setTimeout(function(){ location.reload(); }, 1000);
+				
+			}
+		});
+		
+	}
+	</script>
+
 </head>
 <body class="animsition">
 	
@@ -136,7 +160,7 @@
 						<div class="p-t-33">
 							<div class="flex-w flex-r-m p-b-10">
 								<div class="size-204 flex-w flex-m respon6-next">
-									<div class="wrap-num-product flex-w m-r-20 m-tb-10">
+									<!-- <div class="wrap-num-product flex-w m-r-20 m-tb-10">
 										<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
 											<i class="fs-16 zmdi zmdi-minus"></i>
 										</div>
@@ -146,9 +170,9 @@
 										<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
 											<i class="fs-16 zmdi zmdi-plus"></i>
 										</div>
-									</div>
+									</div> -->
 
-									<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+									<button tyle="button" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04" onclick="addToCart('<?php echo $rowPro['id'];?>','<?php echo $rowPro['name'];?>')">
 										<?php echo ADD_TO_CART;?>
 									</button>
 								</div>

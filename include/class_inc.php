@@ -11,4 +11,12 @@
             return false;
         }
     }
+    class Login{
+        public static function check($cus_id){
+            if(isset($_SESSION['cus_id']) && $cus_id === $_SESSION['cus_id']){
+                return true;
+            }
+            return false;
+        }
+    }
 ?>

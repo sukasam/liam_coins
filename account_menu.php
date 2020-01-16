@@ -16,11 +16,11 @@
                     <?php echo ORDER_HISTORY;?>
                 </a>
             </li>
-            <li class="bor18">
+            <!-- <li class="bor18">
                 <a href="my-tracking.php" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
                     <?php echo ORDER_TRACKING;?>
                 </a>
-            </li>
+            </li> -->
             <li class="bor18">
                 <a href="logout.php" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
                     <?php echo LOGOUT;?>

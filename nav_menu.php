@@ -91,7 +91,7 @@
                     <ul class="sub-menu">
                         <li><a href="my-address.php"><?php echo SHIP_ADDRESS;?></a></li>
                         <li><a href="my-order.php"><?php echo ORDER_HISTORY;?></a></li>
-                        <li><a href="my-tracking"><?php echo ORDER_TRACKING;?></a></li>
+                        <!-- <li><a href="my-tracking"><?php echo ORDER_TRACKING;?></a></li> -->
                         <li><a href="logout.php"><?php echo LOGOUT;?></a></li>
                     </ul>
                     <span class="arrow-main-menu">

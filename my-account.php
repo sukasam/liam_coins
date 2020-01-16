@@ -1,4 +1,16 @@
-<?php include_once("include/include_app.php");?>
+<?php 
+	include_once("include/include_app.php");
+
+	if(!Login::check($_SESSION['cus_id'])){
+		header("Location:login.php");
+	}
+
+	if(isset($_SESSION['cus_id']) && $_SESSION['cus_id'] != ""){
+		$sqlCustomer = "SELECT * FROM `lc_customer` WHERE `id` = '".$_SESSION['cus_id']."' LIMIT 1";
+        $quCustomer = mysqli_query($conn,$sqlCustomer);
+        $rowCustomer = mysqli_fetch_array($quCustomer, MYSQLI_ASSOC);
+	}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,19 +50,88 @@
 	<!-- Content page -->
 	<section class="bg0 p-t-75 p-b-120">
 		<div class="container">
-			<div class="row p-b-148">
+			<div class="row">
 				<div class="col-md-12 col-lg-12">
 					<div class="">
 						<h3 class="mtext-111 cl2 p-b-16 text-center">
 							<?php echo MY_ACCOUNT;?>
 						</h3>
 
+						<?php
+							if(isset($_GET['action']) && $_GET['action'] != ""){
+
+								if($_GET['action'] === "failure"){
+									$msgErrors = "";
+									if(isset($_GET['error']) && $_GET['error'] != ""){
+										if($_GET['error'] == 1){$msgErrors = 'Your current password is incorrect.';}
+										else if($_GET['error'] == 2){$msgErrors = 'New passwords do not match.';}
+										else{}
+									}
+									?>
+									<ul class="msg-error" role="alert">
+										<li><strong><?php echo ERROR;?>:</strong><?php echo $msgErrors;?></li>
+									</ul>
+									<?php
+								}else if($_GET['action'] === "success"){
+									?>
+									<ul class="msg-success" role="alert">
+										<li><strong>Account details changed successfully.</li>
+									</ul>
+									<?php
+								}
+							}
+						?>
+
 						<div class="row p-t-30">
 							<div class="col-md-4 col-lg-3 p-b-80">
 								<?php include_once('account_menu.php')?>
 							</div>
 							<div class="col-md-8 col-lg-9 p-b-80">
-								
+								<form name="frmAccount" method="post" action="control/my-account.php">
+									<div class="row">
+										<div class="col-12 col-sm-6 col-xl-6 col-lg-6">
+											<label class="">FIRST NAME *</label>
+											<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="cus_fname" placeholder="FIRST NAME" required value="<?php echo $rowCustomer['fname'];?>">
+										</div>
+										<div class="col-12 col-sm-6 col-xl-6 col-lg-6">
+											<label class="">LAST NAME *</label>
+											<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="cus_lname" placeholder="LAST NAME" required value="<?php echo $rowCustomer['lname'];?>">
+										</div>
+										<div class="col-12 col-sm-6 col-xl-6 col-lg-6">
+											<label class="">DISPLAY NAME *</label>
+											<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="cus_name" placeholder="DISPLAY NAME" required value="<?php echo $rowCustomer['name'];?>">
+										</div>
+										<div class="col-12 col-sm-6 col-xl-6 col-lg-6">
+											<label class="">EMAIL *</label>
+											<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="cus_email" placeholder="EMAIL" required value="<?php echo $rowCustomer['email'];?>">
+										</div>
+									</div>
+
+									<h3 class="mtext-111 cl2 p-b-16 p-t-20 p-b-20">
+										PASSWORD CHANGE
+									</h3>
+
+									<div class="row">
+										<div class="col-12">
+											<label class="">CURRENT PASSWORD (LEAVE BLANK TO LEAVE UNCHANGED)</label>
+											<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="password" name="cus_password" placeholder="">
+										</div>
+										<div class="col-12">
+											<label class="">NEW PASSWORD (LEAVE BLANK TO LEAVE UNCHANGED)</label>
+											<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="password" name="cus_password_new" placeholder="">
+										</div>
+										<div class="col-12">
+											<label class="">CONFIRM NEW PASSWORD</label>
+											<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="password" name="cus_password_confirm" placeholder="">
+										</div>
+									</div>
+
+									<input type="hidden" name="_token" value="<?php echo Token::generate();?>">
+									<button id="btPayment" type="submit" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer" style="width: 250px;justify-content: center;margin: 0 auto;">
+										SAVE CHANGE
+									</button>
+								</form>
+
 							</div>
 						</div>
 

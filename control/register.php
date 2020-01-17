@@ -12,7 +12,7 @@
 
                 if(empty($rowCustomer['id'])){
                     
-                    $sqlCus = "INSERT INTO `lc_customer` (`id`, `email`, `password`, `status`) VALUES (NULL, '".$cus_email."', '".$cus_passwordT."', '1');";
+                    $sqlCus = "INSERT INTO `lc_customer` (`id`, `email`, `password`, `status`,`register_date`) VALUES (NULL, '".$cus_email."', '".$cus_passwordT."', '1', current_timestamp());";
                     @mysqli_query($conn,$sqlCus);
                     
                     $_SESSION['cus_email'] = $cus_email;

@@ -21,7 +21,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Shoping Cart</title>
+	<title>Order Summary</title>
 	<?php include_once('head_meta.php');?>
 </head>
 <body class="animsition">
@@ -184,12 +184,12 @@
 										<div class="size-209 p-t-1" style="text-align: right;">
 											<span class="stext-110 cl2">
 												<?php 
-													if(decode($rowCusOrder['payment_status'],LIAM_COINS_KEY) == '1'){
-														echo '<span style="color: #0d7d00;">Paid<span>';
-													}else if(decode($rowCusOrder['payment_status'],LIAM_COINS_KEY) == '2'){
-														echo '<span style="color: #ff0000;">Cancel<span>';
+													if($rowCusOrder['payment_status'] == 'Completed'){
+														echo '<span style="color: #0d7d00;">'.$rowCusOrder['payment_status'].'<span>';
+													}else if($rowCusOrder['payment_status'] == 'Pending'){
+														echo '<span style="color: #0d31b7;">'.$rowCusOrder['payment_status'].'<span>';
 													}else{
-														echo '<span style="color: #0d31b7;">Pending<span>';
+														echo '<span style="color: #ff0000;">'.$rowCusOrder['payment_status'].'<span>';
 													}
 												?>
 											</span>

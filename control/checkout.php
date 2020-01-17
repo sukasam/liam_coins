@@ -85,7 +85,7 @@
                 // 1 = Paid
                 // 2 = Cancel
 
-                $paymeny_status = encode("0",LIAM_COINS_KEY);
+                $paymeny_status = "Pending";
 
                 $sqlOrder = "INSERT INTO `lc_order` (`id`, `cus_id`, `order_number`, `order_date`, `order_total`, `payment_type`, `payment_status`, `type_address`, `bill_fname`, `bill_lname`, `bill_company`, `bill_address1`, `bill_address2`, `bill_city`, `bill_country`, `bill_zipcode`, `bill_phone`, `bill_email`, `ship_fname`, `ship_lname`, `ship_company`, `ship_address1`, `ship_address2`, `ship_city`, `ship_country`, `ship_zipcode`, `ship_phone`, `ship_email`) 
                 VALUES (NULL, '".$cus_id."', '".$orderTempo."', current_timestamp(), '".$total_price."', '".$paymeny_type."', '".$paymeny_status."', '".$type_address."'

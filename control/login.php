@@ -2,7 +2,6 @@
      include_once("../include/include_app.php");
      if($_SERVER['REQUEST_METHOD'] === 'POST'){
         if(isset($_POST['cus_email'],$_POST['cus_password'],$_POST['_token'])){
-
             if(Token::check($_POST['_token'])){
                 $cus_email = mysqli_real_escape_string($conn,$_POST['cus_email']);
                 $cus_passwordT = mysqli_real_escape_string($conn,encode($_POST['cus_password'],LIAM_COINS_KEY));

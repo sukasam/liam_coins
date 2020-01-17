@@ -174,7 +174,7 @@
 				}
 				?>
 
-				<form name="frmOrder" method="post" action="control/checkout.php">
+				<form name="frmOrder" method="post" action="control/checkout.php" name="checkoutForm">
 					<div class="col-lg-10 col-xl-10 m-lr-auto m-b-50">
 						<div class="m-l-25 m-r--38 m-lr-0-xl">
 

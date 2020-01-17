@@ -1,18 +1,40 @@
 <?php include_once("include/include_app.php");
 
+$num = 0;
+$e_page=10; // กำหนด จำนวนรายการที่แสดงในแต่ละหน้า   
+$step_num=0;
+$sqlPro = "";
+$totalPro = 0;
+$query_str = '';
+
 if(!Login::check($_SESSION['cus_id'])){
 	header("Location:login.php");
 }
 
 if(isset($_SESSION['cus_id']) && $_SESSION['cus_id'] != ""){
+
 	$sqlCustomer = "SELECT * FROM `lc_customer` WHERE `id` = '".$_SESSION['cus_id']."' LIMIT 1";
 	$quCustomer = mysqli_query($conn,$sqlCustomer);
 	$rowCustomer = mysqli_fetch_array($quCustomer, MYSQLI_ASSOC);
 
-	$sqlCusOrder = "SELECT * FROM `lc_order` WHERE `cus_id` = '".$rowCustomer['id']."' LIMIT 1";
+	$sqlCusOrder = "SELECT * FROM `lc_order` WHERE `cus_id` = '".$rowCustomer['id']."'";
 	$quCusOrder = mysqli_query($conn,$sqlCusOrder);
-	$rowCusOrder = mysqli_fetch_array($quCusOrder, MYSQLI_ASSOC);
+	$totalPro = mysqli_num_rows($quCusOrder);
 }
+
+if(!isset($_GET['page']) || (isset($_GET['page']) && $_GET['page']==1)){   
+	$_GET['page']=1;   
+	$step_num=0;
+	$s_page = 0;    
+}else{   
+	$s_page = $_GET['page']-1;
+	$step_num=$_GET['page']-1;  
+	$s_page = $s_page*$e_page;
+}  
+
+$sqlCusOrder.=" LIMIT ".$s_page.",$e_page";
+$quOrderS = mysqli_query($conn,$sqlCusOrder);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,32 +90,52 @@ if(isset($_SESSION['cus_id']) && $_SESSION['cus_id'] != ""){
 								<div class="wrap-table-shopping-cart">
 									<table class="table-shopping-cart">
 										<tr class="table_head">
-											<th class="column-1 text-center" style="width: 20%;">ORDER NUMBER</th>
-											<th class="column-2 text-center" style="width: 20%;">DATE</th>
-											<th class="column-3 text-center" style="width: 20%;">EMAIL:</th>
+											<th class="column-1 text-center" style="width: 20%;">No.</th>
+											<th class="column-2 text-center" style="width: 20%;">ORDER NUMBER</th>
+											<th class="column-3 text-center" style="width: 20%;">DATE:</th>
 											<th class="column-4 text-center" style="width: 20%;">TOTAL</th>
 											<th class="column-5 text-center" style="width: 20%;">PAYMENT Status</th>
 										</tr>
-
+										<?php 
+										$numOr = $s_page+1;
+										while($rowCusOrder = mysqli_fetch_array($quOrderS, MYSQLI_ASSOC)){
+										?>
 										<tr class="table_row" style="height: 60px;">
-											<td class="column-1 text-center" style="padding-bottom: 0px;white-space: nowrap;"><a href="order-summary.php?orderID=<?php echo encode($rowCusOrder['orderID'],LIAM_COINS_KEY)?>" target="_blank" class="hov-cl1"><?php echo $rowCusOrder['order_number'];?></a></td>
-											<td class="column-2 text-center" style="padding-bottom: 0px;white-space: nowrap;"><?php echo substr($rowCusOrder['order_date'],0,10);?></td>
-											<td class="column-3 text-center" style="padding-bottom: 0px;white-space: nowrap;"><?php echo $rowCusOrder['bill_email'];?></td>
+											<td class="column-1 text-center" style="padding-bottom: 0px;white-space: nowrap;"><?php echo sprintf("%04d",$numOr);?></td>
+											<td class="column-2 text-center" style="padding-bottom: 0px;white-space: nowrap;"><a href="order-summary.php?orderID=<?php echo encode($rowCusOrder['order_number'],LIAM_COINS_KEY)?>" target="_blank" class="hov-cl1"><?php echo $rowCusOrder['order_number'];?></a></td>
+											<td class="column-3 text-center" style="padding-bottom: 0px;white-space: nowrap;"><?php echo substr($rowCusOrder['order_date'],0,10);?></td>
 											<td class="column-4 text-center" style="padding-bottom: 0px;white-space: nowrap;"><?php echo number_format($rowCusOrder['order_total'],2);?></td>
 											<td class="column-5 text-center" style="padding-bottom: 0px;white-space: nowrap;">
 											<?php 
-													if(decode($rowCusOrder['payment_status'],LIAM_COINS_KEY) == '1'){
-														echo '<span style="color: #0d7d00;">Paid<span>';
-													}else if(decode($rowCusOrder['payment_status'],LIAM_COINS_KEY) == '2'){
-														echo '<span style="color: #ff0000;">Cancel<span>';
+													if($rowCusOrder['payment_status'] == 'Completed'){
+														echo '<span style="color: #0d7d00;">'.$rowCusOrder['payment_status'].'<span>';
+													}else if($rowCusOrder['payment_status'] == 'Pending'){
+														echo '<span style="color: #0d31b7;">'.$rowCusOrder['payment_status'].'<span>';
 													}else{
-														echo '<span style="color: #0d31b7;">Pending<span>';
+														echo '<span style="color: #ff0000;">'.$rowCusOrder['payment_status'].'<span>';
 													}
 												?>
 											</td>
 										</tr>
+										<?php $numOr++;}?>
 
 									</table>
+								</div>
+
+								<div class="flex-c-m flex-w w-full p-t-45">
+									<?php
+
+										if($totalPro > $e_page){
+											$pageN = 0;
+											if(isset($_GET['page'])){
+												$pageN = $_GET['page']; 
+											}else{
+												$pageN = 1;
+											}
+											page_navi($totalPro,$pageN,$e_page,$query_str);
+										}
+										
+									?>
 								</div>
 							</div>
 						</div>

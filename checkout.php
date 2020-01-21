@@ -128,7 +128,7 @@
 			<div class="row">
 				<?php 
 
-				if(isset($_SESSION['cus_email']) && $_SESSION['cus_email'] != ""){}
+				if(isset($_SESSION['cus_id']) && $_SESSION['cus_id'] != ""){}
 				else{
 				?>
 				<div class="col-lg-10 col-xl-10 m-lr-auto m-b-60">
@@ -140,8 +140,8 @@
 							<form name="frmLogin" id="frmLogin" method="post" action="control/login.php" style="display:none;">
 								<div class="row p-b-20">
 									<div class="col-12 col-sm-6 col-xl-6 col-lg-6">
-										<label class="">EMAIL *</label>
-										<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="email" name="cus_email" placeholder="Email" required>
+										<label class="">USERNAME *</label>
+										<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="cus_email" placeholder="Email" required>
 									</div>
 									<div class="col-12 col-sm-6 col-xl-6 col-lg-6">
 										<label class="">PASSWORD *</label>

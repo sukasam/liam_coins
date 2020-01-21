@@ -135,4 +135,11 @@ function page_navi($total_item, $cur_page, $per_page=10, $query_str="", $min_pag
     ';      
 }
 
+function get_page($conn,$page_id){
+    $sqlPage = "SELECT * FROM `lc_page` WHERE `id` = '".$page_id."' ORDER BY id ASC LIMIT 1 ";
+    $quPage = mysqli_query($conn,$sqlPage);
+    $rowPage = mysqli_fetch_array($quPage, MYSQLI_ASSOC);
+    return stripslashes($rowPage['detail']);
+}
+
 ?>

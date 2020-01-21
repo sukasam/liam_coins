@@ -65,8 +65,8 @@ div img {
   <input type="hidden" name="quantity" value="1">
   <input type="hidden" name="currency_code" value="USD">
   <input type="hidden" name="invoice" value="<?php echo $rowCusOrder['order_number'];?>">
-  <input type="hidden" name="return" value="http://localhost/liam_coins/paypal/paypal_return.php" />
-  <input type="hidden" name="cancel_return" value="http://localhost/liam_coins/shoping-cart.php" />
+  <input type="hidden" name="return" value="<?php echo DOMAIN_SITE;?>/paypal/paypal_return.php" />
+  <input type="hidden" name="cancel_return" value="<?php echo DOMAIN_SITE;?>/shoping-cart.php" />
   <input type="hidden" name="cbt" value="Return to Liam Coins">
   
   <!-- <input type="image" name="submit"

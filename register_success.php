@@ -1,8 +1,14 @@
-<?php include_once("include/include_app.php");?>
+<?php include_once("include/include_app.php");
+	if(isset($_GET['key']) && $_GET['key'] != ""){
+		$email = decode($_GET['key'],LIAM_COINS_KEY);
+	}else{
+		die();
+	}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title><?php echo BANKNOTES_INVESTMENT;?></title>
+	<title>Registration</title>
 	<?php include_once('head_meta.php');?>
 </head>
 <body class="animsition">
@@ -27,9 +33,9 @@
 				<?php echo HOME;?>
 				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
 			</a>
-			
+
 			<span class="stext-109 cl4">
-				<?php echo BANKNOTES_INVESTMENT;?>
+				Registration
 			</span>
 
 		</div>
@@ -42,11 +48,15 @@
 				<div class="col-md-12 col-lg-12">
 					<div class="p-t-7 p-r-85 p-r-15-lg p-r-0-md">
 						<h3 class="mtext-111 cl2 p-b-20 text-center">
-							Banknotes investment
+							Registration
 						</h3>
 
 						<div class="stext-113 cl6 p-b-26">
-							<?php echo get_page($conn,7);?>
+							<?php 
+							$string = get_page($conn,13);
+							$content = sprintf($string,$email);;
+							?>
+							<center><?php echo $content;?></center>
 						</div>
 
 					</div>

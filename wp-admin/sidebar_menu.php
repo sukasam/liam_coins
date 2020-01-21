@@ -7,6 +7,7 @@
     <li><a href="orders.php"><i class="icon icon-list-alt"></i> <span>Orders</span></a> </li>
     <li><a href="customers.php"><i class="icon icon-user-md"></i> <span>Customers</span></a> </li>
     <!-- <li><a href="index.php"><i class="icon icon-cogs"></i> <span>Setting</span></a> </li> -->
+    <li><a href="pages.php"><i class="icon icon-align-justify"></i> <span>Pages</span></a> </li>
     <li><a href="logout.php"><i class="icon icon-share-alt"></i> <span>Logout</span></a> </li>
   </ul>
 </div>

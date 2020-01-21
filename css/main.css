@@ -282,6 +282,8 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
   -o-transition: height 0.3s, background-color 0.3s;
   -moz-transition: height 0.3s, background-color 0.3s;
   transition: height 0.3s, background-color 0.3s;
+
+  z-index: 999;
 }
 
 .header-v2 .wrap-menu-desktop {
@@ -582,6 +584,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
   color: #ffd700;
 }
 
+
 /*---------------------------------------------*/
 @media (max-width: 767px) {
   .wrap-search-header input,
@@ -608,6 +611,14 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
     height: 80px;
   }
 }
+
+
+@media (min-width: 1200px) {
+  select{
+    text-indent: 22px;
+  }
+}
+
 
 
 /*==================================================================
@@ -2545,6 +2556,12 @@ input.num-product::-webkit-inner-spin-button {
   height: 40px;
 }
 
+.size-126 {
+  width: 50%;
+  height: 50px;
+}
+
+
 /*//////////////////////////////////////////////////////////////////
 [ Width ]*/
 .size-201 {
@@ -2617,6 +2634,10 @@ input.num-product::-webkit-inner-spin-button {
 
 .size-218 {
   max-width: 286px;
+}
+
+.size-219 {
+  width: 80%;
 }
 
 
@@ -3396,6 +3417,7 @@ input.num-product::-webkit-inner-spin-button {
   list-style: none outside;
   width: auto;
   word-wrap: break-word;
+  z-index: 1;
 }
 
 .msg-success {
@@ -3407,6 +3429,7 @@ input.num-product::-webkit-inner-spin-button {
   list-style: none outside;
   width: auto;
   word-wrap: break-word;
+  z-index: 1;
 }
 
 .hide{
@@ -3419,3 +3442,4 @@ input, textarea{
   border: 1px solid #dddddd;
   margin-bottom: 20px;
 }
+

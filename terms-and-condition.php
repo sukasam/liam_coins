@@ -41,35 +41,13 @@
 			<div class="row p-b-148">
 				<div class="col-md-12 col-lg-12">
 					<div class="p-t-7">
-						<h3 class="mtext-111 cl2 p-b-16 text-center">
+						<h3 class="mtext-111 cl2 p-b-20 text-center">
 							<?php echo TERMS_AND_CONDITION;?>
 						</h3>
 
-                        <div class="stext-113 cl6 ">
-                            <p>Please read the following terms and conditions very carefully as your use of service is subject to your acceptance of and compliance with the following terms and conditions ("Terms").</p>
-                            <p>&nbsp;</p>
-                            <p>By subscribing to or using any of our services you agree that you have read, understood and are bound by the Terms, regardless of how you subscribe to or use the services. If you do not want to be bound by the Terms, you must not subscribe to or use our services.</p>
-                            <p>&nbsp;</p>
-                            <p>In these Terms, references to “you”, “User” shall mean the end user accessing the Website, its contents and using the Services offered through the Website. “Service Providers” mean independent third party service providers, and “we”, “us” and “our” shall mean www.liamconis.uk, its franchisor, affiliates and partners.</p>
-                            <p>&nbsp;</p>
-                            <p>1. www.liamconis.uk website is an Internet based content and e-commerce portal a company incorporated under the laws of India.</p>
-                            <p>&nbsp;</p>
-                            <p>2. Use of the Website is offered to you conditioned on acceptance without modification of all the terms, conditions and notices contained in these Terms, as may be posted on the Website from time to time.</p>
-                            <p>&nbsp;</p>
-                            <p>www.liamconis.uk at its sole discretion reserves the right not to accept a User from registering on the Website without assigning any reason thereof.</p>
-                            <p>&nbsp;</p>
-                            <p><strong>USER ACCOUNT/ PASSWORD / SECURITY</strong><br>
-                            You will receive a password and account designation upon completing the Website’s registration process. You are responsible for maintaining the confidentiality of the password and account, and are fully responsible for all activities that occur under your password or account. You agree to immediately notify www.liamconis.uk of any unauthorized use of your password or account or any other breach of security, and ensure that you logout from your account at the end of each session. www.liamconis.uk cannot and will not be liable for any loss or damage arising from your failure to comply with this Section 2. www.liamconis.uk saves all user details in a safe and secure encrypted format, and are not responsible incase of any web theft, unauthorized access to the user details, web server breach, etc. However we will from time to time review and safeguard user information with the latest technology trend.</p>
-                            <p>&nbsp;</p>
-                            <p><strong>DELIVERY</strong><br>
-                            www.liamconis.uk will deliver all products via our appointed courier partners. Please allow ample time for delivery. Urgent or special deliveries can be accommodated at an extra cost. Our Courier Partners will make a maximum of two attempts to deliver your order. In case the customer is not reachable or does not accept delivery of products in these attempts www.liamconis.uk reserves the right to cancel the order(s) at its discretion.</p>
-                            <p>&nbsp;</p>
-                            <p><strong>ORDER CANCELLATION / REFUND POLICY</strong><br>
-                            We do not charge any fees for cancelling any orders. However, if the orders are shipped, then the customer needs to pay for the shipping charges incurred by us. We provide a 100% refund towards returns if there are any errors in the order. However if the order / product is returned based on customers liking/ disliking, we would charge a small fees 10% of the order value along with 100% of the Delivery Charges incurred.</p>
-                            <p>&nbsp;</p>
-                            <p><strong>COPYRIGHT</strong><br>
-                            All copyright is wholly owned and reserved by “www.liamconis.uk”, no part may be reproduced in whole or part under any circumstance.</p>
-                        </div>
+                        <div class="stext-113 cl6 p-b-26">
+							<?php echo get_page($conn,12);?>
+						</div>
 					</div>
 				</div>
 			</div>

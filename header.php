@@ -26,7 +26,7 @@ if(isset($_SESSION['qty'])){
                 </a>
 
                 <?php 
-                 if(isset($_SESSION['cus_email']) && $_SESSION['cus_email'] != ""){
+                 if(isset($_SESSION['cus_id']) && $_SESSION['cus_id'] != ""){
                     ?>
                     <a href="my-account.php" class="flex-c-m p-lr-10 trans-04">
                         <?php echo strtoupper(MY_ACCOUNT);?>

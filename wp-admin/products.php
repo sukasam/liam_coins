@@ -43,7 +43,7 @@
         <button class="btn btn-primary"><?php if(isset($_GET['cat_id']) && $_GET['cat_id'] != ""){echo get_category_name($conn,decode($_GET['cat_id'],LIAM_COINS_KEY));}else{echo "All Categories";}?></button>
         <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><span class="caret"></span></button>
         <ul class="dropdown-menu">
-        <li><a href="products.php">All Categories</a></li>
+        <!-- <li><a href="products.php">New Arrivals</a></li> -->
         <?php 
           
           $quCat = mysqli_query($conn,"SELECT * FROM `lc_category` WHERE 1 ORDER BY id ASC");
@@ -54,11 +54,10 @@
         </ul>
       </div>
       <div class="btn-group">
-        <button class="btn btn-warning">All Sub Categories</button>
+        <button class="btn btn-warning"><?php if(isset($_GET['catsub_id']) && $_GET['catsub_id'] != ""){echo get_category_sub_name($conn,decode($_GET['catsub_id'],LIAM_COINS_KEY));}else{echo "New Arrivals";}?></button>
         <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle"><span class="caret"></span></button>
         <ul class="dropdown-menu">
-
-        <li><a href="products.php?cat_id=<?php echo $_GET['cat_id'];?>">All Sub Categories</a></li>
+         <li><a href="products.php?cat_id=<?php echo $_GET['cat_id'];?>">New Arrivals</a></li>
           <?php
             if(isset($_GET['cat_id']) && $_GET['cat_id'] != ""){
               $cat_idD = decode($_GET['cat_id'],LIAM_COINS_KEY);
@@ -70,7 +69,7 @@
               }
             }else{
               ?>
-              <li><a href="products.php">All Sub Categories</a></li>
+              <li><a href="products.php?cat_id=<?php echo $_GET['cat_id'];?>">New Arrivals</a></li>
               <?php
             }
           ?>

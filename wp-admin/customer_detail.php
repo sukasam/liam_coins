@@ -11,6 +11,14 @@
     $quCusD = mysqli_query($conn,$sqlCusD);
     $rowCusD = mysqli_fetch_array($quCusD, MYSQLI_ASSOC);
 
+    $sqlCusBill = "SELECT * FROM `lc_bill_addres` WHERE `cus_id` = '".$rowCusD['id']."' LIMIT 1";
+    $quCusBill = mysqli_query($conn,$sqlCusBill);
+    $rowCusBill = mysqli_fetch_array($quCusBill, MYSQLI_ASSOC);
+
+    $sqlCusShip = "SELECT * FROM `lc_ship_addres` WHERE `cus_id` = '".$rowCusD['id']."' LIMIT 1";
+    $quCusShip = mysqli_query($conn,$sqlCusShip);
+    $rowCusShip = mysqli_fetch_array($quCusShip, MYSQLI_ASSOC);
+
   }else{
     header("Location:customers.php");
   }
@@ -43,23 +51,23 @@
             <table class="table table-bordered table-striped">
               <thead>
                 <tr>
-                  <th>First Name</th>
-                  <th>Lase Name</th>
-                  <th>Display Name</th>
+                  <th>Name</th>
+                  <th>Username</th>
                   <th>Email</th>
                   <th>Register Since</th>
                   <th>Status</th>
+                  <th>Email Confirmed</th>
                 </tr>
               </thead>
               <tbody>
 
               <tr class="gradeX">
-                <td style="vertical-align: middle;"><center><?php echo $rowCusD['fname']?></center></td>
-                <td style="vertical-align: middle;"><center><?php echo $rowCusD['lname'];?></center></td>
-                <td style="vertical-align: middle;"><center><?php echo $rowCusD['name'];?></center></td>
-                <td style="vertical-align: middle;"><center><?php echo $rowCusD['email'];?></center></td>
+                <td style="vertical-align: middle;"><center><?php echo $rowCusD['cus_fname'].' '.$rowCusD['cus_lname'];?></center></td>
+                <td style="vertical-align: middle;"><center><?php echo $rowCusD['cus_username'];?></center></td>
+                <td style="vertical-align: middle;"><center><?php echo $rowCusD['cus_email'];?></center></td>
                 <td style="vertical-align: middle;"><center><?php echo $rowCusD['register_date'];?></center></td>
                 <td style="vertical-align: middle;"><center><?php if($rowCusD['status'] == '1'){?><span class="label label-success">Enable</span><?php }else{?><span class="label label-important">Disable</span><?php }?></center></td>
+                <td style="vertical-align: middle;"><center><?php if($rowCusD['confirm_email'] == '1'){?><span class="label label-success">Confirmed</span><?php }else{?><span class="label label-important">Not yet confirmed</span><?php }?></center></td>
               </tr>
 
               </tbody>
@@ -77,32 +85,31 @@
                 <tr>
                   <th>BILLING ADDRESS</th>
                   <th>SHIPPING ADDRESS</th>
-                </tr>
+                </tr>    
               </thead>
               <tbody>
                 <tr class="odd gradeX">
                   <td class="center">
                     <?php 
-                    
                     ?>
-                  <!-- <?php if($rowCusD['bill_fname'] != ""){?><p><strong>Full Name :</strong> <?php echo $rowCusD['bill_fname'].' '.$rowCusD['bill_lname'];?></p><?php }?>
-												<?php if($rowCusD['bill_company'] != ""){?><p><strong>Company Name :</strong> <?php echo $rowCusD['bill_company'];?></p><?php }?>
-												<?php if($rowCusD['bill_address1'] != ""){?><p><strong>Address :</strong> <?php echo $rowCusD['bill_address1'].' '.$rowCusD['bill_address2'];?></p><?php }?>
-												<?php if($rowCusD['bill_city'] != ""){?><p><strong>City :</strong> <?php echo $rowCusD['bill_city'];?></p><?php }?>
-												<?php if($rowCusD['bill_country'] != ""){?><p><strong>State / Country :</strong> <?php echo $rowCusD['bill_country'];?></p><?php }?>
-												<?php if($rowCusD['bill_zipcode'] != ""){?><p><strong>Postcode :</strong> <?php echo $rowCusD['bill_zipcode'];?></p><?php }?>
-												<?php if($rowCusD['bill_phone'] != ""){?><p><strong>Phone :</strong> <?php echo $rowCusD['bill_phone'];?></p><?php }?>
-												<?php if($rowCusD['bill_email'] != ""){?><p><strong>Email :</strong> <?php echo $rowCusD['bill_email'];?></p><?php }?> -->
+                        <?php if($rowCusBill['fname'] != ""){?><p><strong>Full Name :</strong> <?php echo $rowCusBill['fname'].' '.$rowCusBill['lname'];?></p><?php }?>
+												<?php if($rowCusBill['company'] != ""){?><p><strong>Company Name :</strong> <?php echo $rowCusBill['company'];?></p><?php }?>
+												<?php if($rowCusBill['address1'] != ""){?><p><strong>Address :</strong> <?php echo $rowCusBill['address1'].' '.$rowCusBill['address2'];?></p><?php }?>
+												<?php if($rowCusBill['city'] != ""){?><p><strong>City :</strong> <?php echo $rowCusBill['city'];?></p><?php }?>
+												<?php if($rowCusBill['country'] != ""){?><p><strong>State / Country :</strong> <?php echo $rowCusBill['country'];?></p><?php }?>
+												<?php if($rowCusBill['zipcode'] != ""){?><p><strong>Postcode :</strong> <?php echo $rowCusBill['zipcode'];?></p><?php }?>
+												<?php if($rowCusBill['phone'] != ""){?><p><strong>Phone :</strong> <?php echo $rowCusBill['phone'];?></p><?php }?>
+												<?php if($rowCusBill['email'] != ""){?><p><strong>Email :</strong> <?php echo $rowCusBill['email'];?></p><?php }?>
                   </td>
                   <td class="center">
-                        <!-- <?php if($rowCusD['ship_fname'] != ""){?><p><strong>Full Name :</strong> <?php echo $rowCusD['ship_fname'].' '.$rowCusD['ship_lname'];?></p><?php }?>
-												<?php if($rowCusD['ship_company'] != ""){?><p><strong>Company Name :</strong> <?php echo $rowCusD['ship_company'];?></p><?php }?>
-												<?php if($rowCusD['ship_address1'] != ""){?><p><strong>Address :</strong> <?php echo $rowCusD['ship_address1'].' '.$rowCusD['ship_address2'];?></p><?php }?>
-												<?php if($rowCusD['ship_city'] != ""){?><p><strong>City :</strong> <?php echo $rowCusD['ship_city'];?></p><?php }?>
-												<?php if($rowCusD['ship_country'] != ""){?><p><strong>State / Country :</strong> <?php echo $rowCusD['ship_country'];?></p><?php }?>
-												<?php if($rowCusD['ship_zipcode'] != ""){?><p><strong>Postcode :</strong> <?php echo $rowCusD['ship_zipcode'];?></p><?php }?>
-												<?php if($rowCusD['ship_phone'] != ""){?><p><strong>Phone :</strong> <?php echo $rowCusD['ship_phone'];?></p><?php }?>
-												<?php if($rowCusD['ship_email'] != ""){?><p><strong>Email :</strong> <?php echo $rowCusD['ship_email'];?></p><?php }?> -->
+                        <?php if($rowCusShip['fname'] != ""){?><p><strong>Full Name :</strong> <?php echo $rowCusShip['fname'].' '.$rowCusShip['lname'];?></p><?php }?>
+												<?php if($rowCusShip['company'] != ""){?><p><strong>Company Name :</strong> <?php echo $rowCusShip['company'];?></p><?php }?>
+												<?php if($rowCusShip['address1'] != ""){?><p><strong>Address :</strong> <?php echo $rowCusShip['address1'].' '.$rowCusShip['address2'];?></p><?php }?>
+												<?php if($rowCusShip['city'] != ""){?><p><strong>City :</strong> <?php echo $rowCusShip['city'];?></p><?php }?>
+												<?php if($rowCusShip['country'] != ""){?><p><strong>State / Country :</strong> <?php echo $rowCusShip['country'];?></p><?php }?>
+												<?php if($rowCusShip['zipcode'] != ""){?><p><strong>Postcode :</strong> <?php echo $rowCusShip['zipcode'];?></p><?php }?>
+												<?php if($rowCusShip['phone'] != ""){?><p><strong>Phone :</strong> <?php echo $rowCusShip['phone'];?></p><?php }?>
+												<?php if($rowCusShip['email'] != ""){?><p><strong>Email :</strong> <?php echo $rowCusShip['email'];?></p><?php }?>
                   </td>
                 </tr>
               </tbody>

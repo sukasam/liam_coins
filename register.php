@@ -16,48 +16,168 @@
 		<?php include_once("nav_menu_mobile.php");?>
 
 		<?php include_once("modal_search.php");?>
+
+		<script>
+			function check_password(){
+
+				var pwdChk = $('#cus_password').val();
+
+				var Atleast8 = new RegExp("^(?=.{8,})");
+				var specialCharac = new RegExp("^(?=.*[!@#\$%\^&\*])");
+				var numRegex = new RegExp("^(?=.*[0-9])");
+				
+				if(Atleast8.test(pwdChk)){
+					$('#p1f').addClass('hide');
+					$('#p1s').removeClass('hide');
+				}else{
+					$('#p1f').removeClass('hide');
+					$('#p1s').addClass('hide');
+				}
+
+				if(specialCharac.test(pwdChk)){
+					$('#p2f').addClass('hide');
+					$('#p2s').removeClass('hide');
+				}else{
+					$('#p2f').removeClass('hide');
+					$('#p2s').addClass('hide');
+				}
+
+				if(numRegex.test(pwdChk)){
+					$('#p3f').addClass('hide');
+					$('#p3s').removeClass('hide');
+				}else{
+					$('#p3f').removeClass('hide');
+					$('#p3s').addClass('hide');
+				}
+			}
+
+			function validateForm(){
+
+				var passwordRegex = new RegExp("^(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+				var pwdChk = $('#cus_password').val();
+				var pwdChk2 = $('#cus_repeatpassword').val();
+
+				var cus_email = $('#cus_email').val();
+				var cus_confirm_email = $('#cus_confirm_email').val();
+		
+				if(!passwordRegex.test(pwdChk)){
+					$('#cus_password').focus();
+					return false;
+				}
+				
+				if(pwdChk != pwdChk2){
+					$('#cus_repeatpassword').focus();
+					return false;
+				}
+
+				if(cus_email != cus_confirm_email){
+					$('#cus_confirm_email').focus();
+					return false;
+				}
+				
+				if(!$('#cus_chkterm').prop('checked')){
+					$('#cus_chkterm').focus();
+					return false;
+				}
+
+			}
+		</script>
+
 	</header>
 
 	<?php include_once('cart.php');?>
-	
-	<!-- breadcrumb -->
-	<!-- <div class="container">
-		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-			<a href="index.php" class="stext-109 cl8 hov-cl1 trans-04">
-				<?php echo HOME;?>
-				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-			</a>
-			
-			<span class="stext-109 cl4">
-				<?php echo REGISTER;?>
-			</span>
 
-		</div>
-	</div> -->
 
 	<!-- Content page -->
 	<section class="bg0 p-t-75 p-b-120">
 		<div class="container">
 		<div class="flex-w flex-tr">
-				<div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md" style="margin: 0 auto;">
-					<form name="frm" method="post" action="control/register.php">
+				<div class="size-215 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md" style="margin: 0 auto;">
+					<form name="frmregister" id="frmregister" method="post" action="control/register.php" onsubmit="return validateForm()">
 						<h4 class="mtext-105 cl2 txt-center p-b-30">
-							<?php echo NEW_CUSTOMER_REGISTER;?>
+							REGISTER
 						</h4>
-						<div class="bor8 m-b-20 how-pos4-parent">
-							<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" style="margin-bottom: 0px;" type="email" name="cus_email" placeholder="Your Email Address" required>
-							<img class="how-pos4 pointer-none" src="images/icons/icon-email.png" alt="ICON">
-						</div>
 
-						<div class="bor8 m-b-20 how-pos4-parent">
-							<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" style="margin-bottom: 0px;" type="password" name="cus_password" placeholder="Your Password" required>
-							<img class="how-pos4 pointer-none" src="images/icons/icon-password.png" alt="ICON">
+						<div class="row">
+							<div class="col-12 p-b-20">
+								<input class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="margin-bottom: 0px;" type="text" name="cus_username" placeholder="User name" required>
+							</div>
+							<div class="col-12 p-b-20">
+								<p class="p-b-10">Choose a password meeting the following criteria</p>
+								<p><span id="p1f"><img src="images/icon_uncheck.jpg" width="18"></span><span id="p1s" class="hide"><img src="images/icon_check.jpg" width="18"></span> Your input was to short (at least 8 characters).</p>
+								<p><span id="p2f"><img src="images/icon_uncheck.jpg" width="18"></span><span id="p2s" class="hide"><img src="images/icon_check.jpg" width="18"></span> At least one or more special characters included.</p>
+								<p><span id="p3f"><img src="images/icon_uncheck.jpg" width="18"></span><span id="p3s" class="hide"><img src="images/icon_check.jpg" width="18"></span> At least one or more numbers included.</p>
+							</div>
+							<div class="col-12 col-md-6 p-b-20">
+								<input class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="margin-bottom: 0px;" type="password" id="cus_password" name="cus_password" placeholder="Password" required onkeyup="check_password();">
+							</div>
+							<div class="col-12 col-md-6 p-b-20">
+								<input class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="margin-bottom: 0px;" type="password" id="cus_repeatpassword" name="cus_repeatpassword" placeholder="Repeat Password" required>
+							</div>
+							<div class="col-12 col-md-6 p-b-20">
+								<input class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="margin-bottom: 0px;" type="text" name="cus_company" placeholder="Company">
+							</div>
+							<div class="col-12 p-b-20">
+								<select class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="background: none;
+	border: 1px solid #dddddd;" name="cus_title" id="cus_title" required>
+									<option value="Mr">Mr</option>
+									<option value="Mrs">Ms</option>
+									<option value="Dr">Dr</option>
+									<option value="Prof">Prof</option>
+									<option value="Prof. Dr">Prof. Dr</option>
+								</select>
+							</div>
+							<div class="col-12 col-md-6 p-b-20">
+								<input class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="margin-bottom: 0px;" type="text" name="cus_fname" placeholder="First name" required>
+							</div>
+							<div class="col-12 col-md-6 p-b-20">
+								<input class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="margin-bottom: 0px;" type="text" name="cus_lname" placeholder="Last name" required>
+							</div>
+							<div class="col-12 p-b-20">
+								<input class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="margin-bottom: 0px;" type="text" name="cus_address1" placeholder="Street address" required>
+							</div>
+							<div class="col-12 p-b-20">
+								<input class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="margin-bottom: 0px;" type="text" name="cus_address2" placeholder="Street address line 2">
+							</div>
+							<div class="col-12 col-md-4 p-b-20">
+								<input class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="margin-bottom: 0px;" type="text" name="cus_zipcode" placeholder="Postal Code / Zip" required>
+							</div>
+							<div class="col-12 col-md-8 p-b-20">
+								<input class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="margin-bottom: 0px;" type="text" name="cus_city" placeholder="City" required>
+							</div>
+							<div class="col-12 p-b-20">
+								<select class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="background: none;
+    border: 1px solid #dddddd;" name="cus_country" id="cus_country" required>
+									<option value="Germany">Germany</option>
+								</select>
+							</div>
+							<div class="col-12 p-b-20">
+								<input class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="margin-bottom: 0px;" type="tel" name="cus_phone" placeholder="Phone number" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" >
+							</div>
+							<div class="col-12 col-md-6 p-b-20">
+								<input class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="margin-bottom: 0px;" type="email" name="cus_email" id="cus_email" placeholder="Email address" required>
+							</div>
+							<div class="col-12 col-md-6 p-b-20">
+								<input class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="margin-bottom: 0px;" type="email" name="cus_confirm_email" id="cus_confirm_email" placeholder="Confirm your email address" required>
+							</div>
+							<div class="col-12 p-b-20">
+								<textarea class="stext-111 cl2 plh3 size-124 p-lr-30 p-tb-15" name="cus_references" placeholder="References"></textarea>
+							</div>
+							<div class="col-12 p-b-20 text-center">
+								<input type="checkbox" style="display: inline-block;" class="form-check-input" id="cus_chkterm" name="cus_chkterm" required>
+								<label style="display: inline-block;" class="form-check-label" for="exampleCheck1">I have read and understood the Terms of Use and <a href="terms-and-condition.php" target="_blank" class="hov-cl1">privacy policy</a> and agree to them.</label>
+							</div>
 						</div>
 
 						<input type="hidden" name="_token" value="<?php echo Token::generate();?>">
-						<button type="submit" class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
+						<div class="text-center">
+							<button type="submit" class="stext-101 cl0 size-125 bg3 bor2 hov-btn3 p-lr-15 trans-04">
+								Register
+							</button>
+						</div>
+						<!-- <button type="submit" class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
 							Submit
-						</button>
+						</button> -->
 					</form>
 				</div>
 			</div>

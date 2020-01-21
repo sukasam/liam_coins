@@ -14,7 +14,7 @@
                 </a>
 
                 <?php 
-                 if(isset($_SESSION['cus_email']) && $_SESSION['cus_email'] != ""){
+                 if(isset($_SESSION['cus_id']) && $_SESSION['cus_id'] != ""){
                     ?>
                     <a href="my-account.php" class="flex-c-m p-lr-10 trans-04">
                         <?php echo strtoupper(MY_ACCOUNT);?>
@@ -51,8 +51,9 @@
             <?php 
                 $rowCatSub1 = get_redirect_product($conn,1);
             ?>
-            <a href="product.php?cat_id=<?php echo encode(1,LIAM_COINS_KEY);?>&catsub_id=<?php echo encode($rowCatSub1,LIAM_COINS_KEY);?>"><?php echo get_category_name($conn,1);?></a>
+            <a href="product.php?cat_id=<?php echo encode(1,LIAM_COINS_KEY);?>"><?php echo get_category_name($conn,1);?></a>
             <ul class="sub-menu-m">
+                <li><a href="product.php?cat_id=<?php echo encode(1,LIAM_COINS_KEY);?>">New Arrivals</a></li>
                 <?php
                 $sqlCatSubMenu = "SELECT * FROM `lc_category_sub` WHERE `category` = 1 ORDER BY id ASC";
                 $quCatSubMenu = mysqli_query($conn,$sqlCatSubMenu);
@@ -70,8 +71,9 @@
 
         <li>
             <?php $rowCatSub2 = get_redirect_product($conn,2);?>
-            <a href="product.php?cat_id=<?php echo encode(2,LIAM_COINS_KEY);?>&catsub_id=<?php echo encode($rowCatSub2,LIAM_COINS_KEY);?>"><?php echo get_category_name($conn,2);?></a>
+            <a href="product.php?cat_id=<?php echo encode(2,LIAM_COINS_KEY);?>"><?php echo get_category_name($conn,2);?></a>
             <ul class="sub-menu-m">
+                <li><a href="product.php?cat_id=<?php echo encode(2,LIAM_COINS_KEY);?>">New Arrivals</a></li>
                 <?php
                 $sqlCatSubMenu = "SELECT * FROM `lc_category_sub` WHERE `category` = 2 ORDER BY id ASC";
                 $quCatSubMenu = mysqli_query($conn,$sqlCatSubMenu);
@@ -126,7 +128,7 @@
         </li>
 
         <?php 
-            if(isset($_SESSION['cus_email']) && $_SESSION['cus_email'] != ""){
+            if(isset($_SESSION['cus_id']) && $_SESSION['cus_id'] != ""){
                 ?>
                 <li>
                     <a href="my-account.php"><?php echo MY_ACCOUNT;?></a>

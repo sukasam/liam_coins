@@ -27,7 +27,7 @@
     define("LOGOUT","Logout"); 
     
     define("LOGIN_MSG","Login to Liam Coins");
-    define("LOGIN_ERROR_MSG","The email or password you entered is incorrect.");
+    define("LOGIN_ERROR_MSG","The username or password you entered is incorrect");
 
     define("BANKNOTES_INVESTMENT","Banknotes investment");
     define("COINS_INVESTMENT","Coins Investment");
@@ -56,6 +56,8 @@
     define("REGISTER_EMAIL_DUPLICATE","An account is already registered with your email address. Please log in.");
     
     define("TERMS_AND_CONDITION","Terms and Condition");
+
+    define("DOMAIN_SITE","https://omega-intranet.com/liamcoins");
     
     
 

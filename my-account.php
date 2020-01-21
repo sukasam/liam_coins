@@ -16,6 +16,82 @@
 <head>
 	<title><?php echo MY_ACCOUNT;?></title>
 	<?php include_once('head_meta.php');?>
+
+	<script>
+			function check_password(){
+
+				var pwdChk = $('#cus_password_new').val();
+				
+				var Atleast8 = new RegExp("^(?=.{8,})");
+				var specialCharac = new RegExp("^(?=.*[!@#\$%\^&\*])");
+				var numRegex = new RegExp("^(?=.*[0-9])");
+
+				console.log(Atleast8.test(pwdChk));
+				
+				if(Atleast8.test(pwdChk)){
+					$('#p1f').addClass('hide');
+					$('#p1s').removeClass('hide');
+				}else{
+					$('#p1f').removeClass('hide');
+					$('#p1s').addClass('hide');
+				}
+
+				if(specialCharac.test(pwdChk)){
+					$('#p2f').addClass('hide');
+					$('#p2s').removeClass('hide');
+				}else{
+					$('#p2f').removeClass('hide');
+					$('#p2s').addClass('hide');
+				}
+
+				if(numRegex.test(pwdChk)){
+					$('#p3f').addClass('hide');
+					$('#p3s').removeClass('hide');
+				}else{
+					$('#p3f').removeClass('hide');
+					$('#p3s').addClass('hide');
+				}
+			}
+
+			function check_confirmpassword(){
+
+				var pwdChk = $('#cus_password_new').val();
+				var pwdChk2 = $('#cus_password_confirm').val();
+
+				if(pwdChk != pwdChk2){
+					$('#cus_password_confirm').focus();
+					$('#p4f').removeClass('hide');
+					$('#p4s').addClass('hide');
+				}else{
+					$('#p4f').addClass('hide');
+					$('#p4s').removeClass('hide');
+				}
+
+			}
+
+			function validateForm(){
+
+				var pwdCurrent = $('#cus_password').val();
+
+				if(pwdCurrent.length > 0){
+					var passwordRegex = new RegExp("^(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+					var pwdChk = $('#cus_password_new').val();
+					var pwdChk2 = $('#cus_password_confirm').val();
+			
+					if(!passwordRegex.test(pwdChk)){
+						$('#cus_password_new').focus();
+						return false;
+					}
+					
+					if(pwdChk != pwdChk2){
+						$('#cus_password_confirm').focus();
+						return false;
+					}
+				}
+
+			}
+		</script>
+
 </head>
 <body class="animsition">
 	
@@ -75,7 +151,7 @@
 								}else if($_GET['action'] === "success"){
 									?>
 									<ul class="msg-success" role="alert">
-										<li><strong>Account details changed successfully.</li>
+										<li><strong>Account details changed successfully.</strong></li>
 									</ul>
 									<?php
 								}
@@ -87,24 +163,50 @@
 								<?php include_once('account_menu.php')?>
 							</div>
 							<div class="col-md-8 col-lg-9 p-b-80">
-								<form name="frmAccount" method="post" action="control/my-account.php">
+								<form name="frmAccount" method="post" action="control/my-account.php" onsubmit="return validateForm()">
 									<div class="row">
 										<div class="col-12 col-sm-6 col-xl-6 col-lg-6">
+											<label class="">USER NAME</label>
+											<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="cus_username" placeholder="USER NAME" required value="<?php echo $rowCustomer['cus_username'];?>" readonly>
+										</div>
+										<div class="col-12 col-sm-6 col-xl-6 col-lg-6">
+											<label class="">EMAIL</label>
+											<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="cus_email" placeholder="EMAIL" required value="<?php echo $rowCustomer['cus_email'];?>" readonly>
+										</div>
+										<div class="col-12">
+											<label class="">COMPANY</label>
+											<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="cus_company" placeholder="COMPANY NAME" required value="<?php echo $rowCustomer['cus_company'];?>">
+										</div>
+										<div class="col-12 p-b-20">
+											<label class="">TITLE *</label>
+											<select class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="background: none;
+				border: 1px solid #dddddd;" name="cus_title" id="cus_title" required>
+												<option value="Mr" <?php if($rowCustomer['cus_title'] === 'Mr'){echo 'selected';}?>>Mr</option>
+												<option value="Mrs" <?php if($rowCustomer['cus_title'] === 'Mrs'){echo 'selected';}?>>Ms</option>
+												<option value="Dr" <?php if($rowCustomer['cus_title'] === 'Dr'){echo 'selected';}?>>Dr</option>
+												<option value="Prof" <?php if($rowCustomer['cus_title'] === 'Prof'){echo 'selected';}?>>Prof</option>
+												<option value="Prof. Dr" <?php if($rowCustomer['cus_title'] === 'Prof. Dr'){echo 'selected';}?>>Prof. Dr</option>
+											</select>
+										</div>
+										<div class="col-12 col-sm-6 col-xl-6 col-lg-6">
 											<label class="">FIRST NAME *</label>
-											<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="cus_fname" placeholder="FIRST NAME" required value="<?php echo $rowCustomer['fname'];?>">
+											<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="cus_fname" placeholder="FIRST NAME" required value="<?php echo $rowCustomer['cus_fname'];?>">
 										</div>
 										<div class="col-12 col-sm-6 col-xl-6 col-lg-6">
 											<label class="">LAST NAME *</label>
-											<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="cus_lname" placeholder="LAST NAME" required value="<?php echo $rowCustomer['lname'];?>">
+											<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="cus_lname" placeholder="LAST NAME" required value="<?php echo $rowCustomer['cus_lname'];?>">
 										</div>
-										<div class="col-12 col-sm-6 col-xl-6 col-lg-6">
-											<label class="">DISPLAY NAME *</label>
-											<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="cus_name" placeholder="DISPLAY NAME" required value="<?php echo $rowCustomer['name'];?>">
+
+										<div class="col-12">
+											<label class="">PHONE NUMBER *</label>
+											<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="cus_phone" placeholder="PHONE NUMBER" required value="<?php echo $rowCustomer['cus_phone'];?>">
 										</div>
-										<div class="col-12 col-sm-6 col-xl-6 col-lg-6">
-											<label class="">EMAIL *</label>
-											<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="cus_email" placeholder="EMAIL" required value="<?php echo $rowCustomer['email'];?>">
+
+										<div class="col-12">
+											<label class="">REFERNCES</label>
+											<textarea class="stext-111 cl2 plh3 size-124 p-lr-30 p-tb-15" name="cus_references" placeholder="REFERNCES"><?php echo stripslashes($rowCustomer['cus_references']);?></textarea>
 										</div>
+										
 									</div>
 
 									<h3 class="mtext-111 cl2 p-b-16 p-t-20 p-b-20">
@@ -114,15 +216,22 @@
 									<div class="row">
 										<div class="col-12">
 											<label class="">CURRENT PASSWORD (LEAVE BLANK TO LEAVE UNCHANGED)</label>
-											<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="password" name="cus_password" placeholder="">
+											<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="password" name="cus_password" id="cus_password" placeholder="">
+										</div>
+										<div class="col-12 p-b-20">
+											<p class="p-b-10">Choose a password meeting the following criteria</p>
+											<p><span id="p1f"><img src="images/icon_uncheck.jpg" width="18"></span><span id="p1s" class="hide"><img src="images/icon_check.jpg" width="18"></span> Your input was to short (at least 8 characters).</p>
+											<p><span id="p2f"><img src="images/icon_uncheck.jpg" width="18"></span><span id="p2s" class="hide"><img src="images/icon_check.jpg" width="18"></span> At least one or more special characters included.</p>
+											<p><span id="p3f"><img src="images/icon_uncheck.jpg" width="18"></span><span id="p3s" class="hide"><img src="images/icon_check.jpg" width="18"></span> At least one or more numbers included.</p>
+											<p><span id="p4f"><img src="images/icon_uncheck.jpg" width="18"></span><span id="p4s" class="hide"><img src="images/icon_check.jpg" width="18"></span> Confirm new password.</p>
 										</div>
 										<div class="col-12">
 											<label class="">NEW PASSWORD (LEAVE BLANK TO LEAVE UNCHANGED)</label>
-											<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="password" name="cus_password_new" placeholder="">
+											<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="password" name="cus_password_new" id="cus_password_new" placeholder="" onkeyup="check_password();">
 										</div>
 										<div class="col-12">
 											<label class="">CONFIRM NEW PASSWORD</label>
-											<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="password" name="cus_password_confirm" placeholder="">
+											<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="password" name="cus_password_confirm" id="cus_password_confirm" placeholder="" onkeyup="check_confirmpassword();">
 										</div>
 									</div>
 

@@ -117,9 +117,12 @@ if(isset($_GET['action']) && $_GET['action'] != ""){
 										<label class="">TOWN / CITY *</label>
 										<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="bill_city" placeholder="" required value="<?php if(isset($rowCusAdd['city'])){echo $rowCusAdd['city'];}?>">
 									</div>
-									<div class="col-12">
-										<label class="">STATE / COUNTY *</label>
-										<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="bill_state" placeholder="" required value="<?php if(isset($rowCusAdd['country'])){echo $rowCusAdd['country'];}?>">
+									<div class="col-12 p-b-20">
+										<label class="">COUNTY *</label>
+										<select class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="background: none;
+			border: 1px solid #dddddd;" name="bill_state" id="bill_state" required>
+											<option value="Germany">Germany</option>
+										</select>
 									</div>
 									<div class="col-12">
 										<label class="">POSTCODE / ZIP *</label>

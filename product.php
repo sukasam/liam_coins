@@ -11,16 +11,18 @@
 	$query_str = '';
 
 	if(isset($_GET['cat_id']) && $_GET['cat_id'] != ""){
+
 		$cat_id = decode($_GET['cat_id'],LIAM_COINS_KEY);
+		
 		$sqlPro = "SELECT * FROM `lc_product` WHERE status = '1' AND category = '".$cat_id."' ORDER BY id DESC";
 		$quPro = mysqli_query($conn,$sqlPro);
 		$totalPro = mysqli_num_rows($quPro);
 		$query_str = '?cat_id='.$_GET['cat_id'];
 
-		if(!isset($_GET['catsub_id'])){
-			$rowCatSubFide = get_redirect_product($conn,$cat_id);
-			header("Location:product.php?cat_id=".$_GET['cat_id']."&catsub_id=".encode($rowCatSubFide,LIAM_COINS_KEY));
-		}
+		// if(!isset($_GET['catsub_id'])){
+		// 	$rowCatSubFide = get_redirect_product($conn,$cat_id);
+		// 	header("Location:product.php?cat_id=".$_GET['cat_id']."&catsub_id=".encode($rowCatSubFide,LIAM_COINS_KEY));
+		// }
 	
 	}else{
 		header("Location:index.php?action=failed");
@@ -113,6 +115,12 @@
 				<?php echo get_category_sub_name($conn,$catsub_id);?>
 			</a>
 			<?php
+			}else{
+				?>
+				<span class="stext-109 cl4">
+					New arrivals
+				</span>
+				<?php
 			}
 			?>
 		</div>

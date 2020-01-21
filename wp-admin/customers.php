@@ -35,12 +35,12 @@
               <thead>
                 <tr>
                   <th>No.</th>
-                  <th>First Name</th>
-                  <th>Lase Name</th>
-                  <th>Display Name</th>
+                  <th>Name</th>
+                  <th>Username</th>
                   <th>Email</th>
                   <th>Register Since</th>
                   <th>Status</th>
+                  <th>Email Confirmed</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -56,12 +56,12 @@
                 ?>
                 <tr class="gradeX">
                   <td style="vertical-align: middle;"><center><?php echo sprintf("%04d",$numCustomer++)?></center></td>
-                  <td style="vertical-align: middle;"><center><?php echo $rowCustomerList['fname']?></center></td>
-                  <td style="vertical-align: middle;"><center><?php echo $rowCustomerList['lname'];?></center></td>
-                  <td style="vertical-align: middle;"><center><?php echo $rowCustomerList['name'];?></center></td>
-                  <td style="vertical-align: middle;"><center><?php echo $rowCustomerList['email'];?></center></td>
+                  <td style="vertical-align: middle;"><center><?php echo $rowCustomerList['cus_fname'].' '.$rowCustomerList['cus_lname']?></center></td>
+                  <td style="vertical-align: middle;"><center><?php echo $rowCustomerList['cus_username'];?></center></td>
+                  <td style="vertical-align: middle;"><center><?php echo $rowCustomerList['cus_email'];?></center></td>
                   <td style="vertical-align: middle;"><center><?php echo $rowCustomerList['register_date'];?></center></td>
                   <td style="vertical-align: middle;"><center><?php if($rowCustomerList['status'] == '1'){?><span class="label label-success">Enable</span><?php }else{?><span class="label label-important">Disable</span><?php }?></center></td>
+                  <td style="vertical-align: middle;"><center><?php if($rowCustomerList['confirm_email'] == '1'){?><span class="label label-success">Confirmed</span><?php }else{?><span class="label label-important">Not yet confirmed</span><?php }?></center></td>
                   <td style="vertical-align: middle;">
                     <center>
                       <a href="customer_detail.php?cus_id=<?php echo encode($rowCustomerList['id'],LIAM_COINS_KEY);?>"><button type="button" class="btn btn-warning btn-mini"><i class="icon-eye-open"></i></button></a> 

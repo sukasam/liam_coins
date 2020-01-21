@@ -12,10 +12,12 @@
 
                     $cus_fname = mysqli_real_escape_string($conn,$_POST['cus_fname']);
                     $cus_lname = mysqli_real_escape_string($conn,$_POST['cus_lname']);
-                    $cus_name = mysqli_real_escape_string($conn,$_POST['cus_name']);
-                    $cus_email = mysqli_real_escape_string($conn,$_POST['cus_email']);
+                    $cus_company = mysqli_real_escape_string($conn,$_POST['cus_company']);
+                    $cus_title = mysqli_real_escape_string($conn,$_POST['cus_title']);
+                    $cus_phone = mysqli_real_escape_string($conn,$_POST['cus_phone']);
+                    $cus_references = mysqli_real_escape_string($conn,addslashes($_POST['cus_references']));
 
-                    $sqlCustomerU = "UPDATE `lc_customer` SET `email` = '".$cus_email."', `fname` = '".$cus_fname."', `lname` = '".$cus_lname."', `name` = '".$cus_name."' WHERE `id` = '".$rowCustomer['id']."'";
+                    $sqlCustomerU = "UPDATE `lc_customer` SET `cus_company` = '".$cus_company."', `cus_title` = '".$cus_title."', `cus_fname` = '".$cus_fname."', `cus_lname` = '".$cus_lname."', `cus_phone` = '".$cus_phone."', `cus_references` = '".$cus_references."' WHERE `id` = '".$rowCustomer['id']."'";
                     mysqli_query($conn,$sqlCustomerU);
 
                     if(isset($_POST['cus_password']) && $_POST['cus_password'] != ""){
@@ -24,10 +26,10 @@
                         $cus_password_new = mysqli_real_escape_string($conn,encode($_POST['cus_password_new'],LIAM_COINS_KEY));
                         $cus_password_confirm = mysqli_real_escape_string($conn,encode($_POST['cus_password_confirm'],LIAM_COINS_KEY));
 
-                        if($cus_password === $rowCustomer['password']){
+                        if($cus_password === $rowCustomer['cus_password']){
                             if($cus_password_new === $cus_password_confirm){
 
-                                $sqlCustomerU = "UPDATE `lc_customer` SET `password` = '".$cus_password_new."' WHERE `id` = '".$rowCustomer['id']."'";
+                                $sqlCustomerU = "UPDATE `lc_customer` SET `cus_password` = '".$cus_password_new."' WHERE `id` = '".$rowCustomer['id']."'";
                                 mysqli_query($conn,$sqlCustomerU);
 
                                 header("Location:../my-account.php?action=success");

@@ -1,8 +1,33 @@
-<?php include_once("include/include_app.php");?>
+<?php include_once("include/include_app.php");
+
+	$confirmed = '';
+	
+	if(isset($_GET['key']) && $_GET['key'] != ""){
+
+		$key = $_GET['key'];
+		$sqlCustomer = "SELECT * FROM `lc_customer` WHERE `active_link` = '".$key."' AND `confirm_email` = 0 LIMIT 1";
+		$quCustomer = mysqli_query($conn,$sqlCustomer);
+		$rowCustomer = mysqli_fetch_array($quCustomer, MYSQLI_ASSOC);
+
+		if($rowCustomer['id'] != ""){
+			$cusUpdate = "UPDATE `lc_customer` SET `status` = '1', `confirm_email` = '1' WHERE `id` = ".$rowCustomer['id'].";";
+			@mysqli_query($conn,$cusUpdate);
+			$confirmed = '<center>Your registration has been successfully confirmed.</center>';
+		}else{
+			$confirmed = '<center>The following error has occurred: Hash does not match.<br/>
+	Please make sure the link from your email has been copied completely.</center>';
+		}
+
+	}else{
+		$confirmed = '<center>The following error has occurred: Hash does not match.<br/>
+	Please make sure the link from your email has been copied completely.</center>';
+	}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title><?php echo BANKNOTES_INVESTMENT;?></title>
+	<title>Confirm Registration</title>
 	<?php include_once('head_meta.php');?>
 </head>
 <body class="animsition">
@@ -27,9 +52,9 @@
 				<?php echo HOME;?>
 				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
 			</a>
-			
+
 			<span class="stext-109 cl4">
-				<?php echo BANKNOTES_INVESTMENT;?>
+				Confirm Registration
 			</span>
 
 		</div>
@@ -42,11 +67,13 @@
 				<div class="col-md-12 col-lg-12">
 					<div class="p-t-7 p-r-85 p-r-15-lg p-r-0-md">
 						<h3 class="mtext-111 cl2 p-b-20 text-center">
-							Banknotes investment
+							Confirm Registration
 						</h3>
 
 						<div class="stext-113 cl6 p-b-26">
-							<?php echo get_page($conn,7);?>
+							<?php 
+							echo $confirmed;
+							?>
 						</div>
 
 					</div>

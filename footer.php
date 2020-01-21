@@ -10,14 +10,14 @@
                 <ul>
                     <li class="p-b-10">
                     <?php $rowCatSub1 = get_redirect_product($conn,1);?>
-                        <a href="product.php?cat_id=<?php echo encode(1,LIAM_COINS_KEY);?>&catsub_id=<?php echo encode($rowCatSub1,LIAM_COINS_KEY);?>" class="stext-107 cl7 hov-cl1 trans-04">
+                        <a href="product.php?cat_id=<?php echo encode(1,LIAM_COINS_KEY);?>" class="stext-107 cl7 hov-cl1 trans-04">
                             <?php echo get_category_name($conn,1);?>
                         </a>
                     </li>
 
                     <li class="p-b-10">
                     <?php $rowCatSub2 = get_redirect_product($conn,2);?>
-                        <a href="product.php?cat_id=<?php echo encode(2,LIAM_COINS_KEY);?>&catsub_id=<?php echo encode($rowCatSub2,LIAM_COINS_KEY);?>" class="stext-107 cl7 hov-cl1 trans-04">
+                        <a href="product.php?cat_id=<?php echo encode(2,LIAM_COINS_KEY);?>" class="stext-107 cl7 hov-cl1 trans-04">
                             <?php echo get_category_name($conn,2);?>
                         </a>
                     </li>
@@ -48,26 +48,26 @@
                 </h4>
 
                 <ul>
-                    <li class="p-b-10">
+                    <!-- <li class="p-b-10">
                         <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
                             <?php echo TRACK_ORDER;?>
                         </a>
-                    </li>
+                    </li> -->
 
                     <li class="p-b-10">
-                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                        <a href="returns.php" class="stext-107 cl7 hov-cl1 trans-04">
                             <?php echo RETURNS;?> 
                         </a>
                     </li>
 
                     <li class="p-b-10">
-                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                        <a href="shipping.php" class="stext-107 cl7 hov-cl1 trans-04">
                             <?php echo SHIPPING;?>
                         </a>
                     </li>
 
                     <li class="p-b-10">
-                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                        <a href="faqs.php" class="stext-107 cl7 hov-cl1 trans-04">
                             <?php echo FAQS;?>
                         </a>
                     </li>

@@ -24,6 +24,30 @@
 	$quProS = mysqli_query($conn,$sqlPro);
 
 ?>
+
+<script>
+	function addToCart(itemId,itemName){
+
+		$.post("include/call_api.php",
+		{
+			action: "addToCart",
+			itemId: itemId
+		},
+		function(data, status){
+
+			if(status === "success"){
+				// var dataSet = data.split("|");
+				// document.getElementById('pro_category_sub').innerHTML= dataSet[1];
+				// $("#pro_category_sub").val('').trigger('change')
+				swal(itemName, "Added to cart !", "success");
+				setTimeout(function(){ location.reload(); }, 1000);
+				
+			}
+		});
+		
+	}
+    </script>
+    
 <!-- Product -->
 <section class="bg0 p-t-23 p-b-140">
     <div class="container">
@@ -57,9 +81,12 @@
                         <!-- <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg1 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
                             <?php echo QUICK_VIEW;?>
                         </a> -->
-                        <a href="product-detail.php?id=<?php echo encode($rowPro['id'],LIAM_COINS_KEY);?>" class="block2-btn flex-c-m stext-103 cl2 size-102 bg1 bor2 hov-btn1 p-lr-15 trans-04">
+                        <!-- <a href="product-detail.php?id=<?php echo encode($rowPro['id'],LIAM_COINS_KEY);?>" class="block2-btn flex-c-m stext-103 cl2 size-102 bg1 bor2 hov-btn1 p-lr-15 trans-04">
                             <?php echo QUICK_VIEW;?>
-                        </a>
+                        </a> -->
+
+                        <button tyle="button" class="block2-btn flex-c-m stext-103 cl2 size-102 bg1 bor2 hov-btn1 p-lr-15 trans-04" onclick="addToCart('<?php echo $rowPro['id'];?>','<?php echo $rowPro['name'];?>')">ADD TO CART</button>
+
                     </div>
 
                     <div class="block2-txt flex-w flex-t p-t-14">

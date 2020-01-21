@@ -13,6 +13,10 @@
                 if($rowCustomer['id'] != ""){
                     
                     $_SESSION['cus_id'] = $rowCustomer['id'];
+                    
+                    $cus_token = TokenLogin::generate();
+                    $sqlCusUpdate= "UPDATE `lc_customer` SET `login_token` = '".$cus_token."' WHERE `id` = ".$rowCustomer['id'].";";
+                    mysqli_query($conn,$sqlCusUpdate);
                 
                     if(isset($_POST['redirect'])){
                         header("Location:../".$_POST['redirect']."?action=success");

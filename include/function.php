@@ -142,4 +142,11 @@ function get_page($conn,$page_id){
     return stripslashes($rowPage['detail']);
 }
 
+function getTokenLogin($conn,$cus_id){
+    $sqlCus = "SELECT * FROM `lc_customer` WHERE `id` = '".$cus_id."' ORDER BY id ASC LIMIT 1 ";
+    $quCus = mysqli_query($conn,$sqlCus);
+    $rowCus = mysqli_fetch_array($quCus, MYSQLI_ASSOC);
+    return $rowCus['login_token'];
+}
+
 ?>

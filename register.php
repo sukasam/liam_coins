@@ -98,6 +98,24 @@
 							REGISTER
 						</h4>
 
+						<?php
+							if(isset($_GET['action']) && $_GET['action'] != ""){
+								if($_GET['action'] === "failure"){
+									$errorMSG = '';
+									if($_GET['error'] === "username"){
+										$errorMSG = 'This Username : '.$_GET['val'].' already exists';
+									}else if($_GET['error'] === "email"){
+										$errorMSG = 'This Email : '.$_GET['val'].' already exists';
+									}
+									?>
+									<ul class="msg-error" role="alert" style="margin-bottom: 20px;">
+										<li><strong><?php echo ERROR;?>:</strong> <?php echo $errorMSG;?></li>
+									</ul>
+									<?php
+								}
+							}
+						?>
+
 						<div class="row">
 							<div class="col-12 p-b-20">
 								<input class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="margin-bottom: 0px;" type="text" name="cus_username" placeholder="User name" required>

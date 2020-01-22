@@ -40,7 +40,7 @@
 	<!-- Content page -->
 	<section class="bg0 p-t-75 p-b-120">
 		<div class="container">
-		<div class="flex-w flex-tr">
+			<div class="flex-w flex-tr">
 				<div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md" style="margin: 0 auto;">
 					<form name="frm" method="post" action="control/login.php">
 						<h4 class="mtext-105 cl2 txt-center p-b-30">
@@ -61,22 +61,21 @@
 							Submit
 						</button>
 					</form>
+					<?php
+					if(isset($_GET['action']) && $_GET['action'] != ""){
+						if($_GET['action'] === "failure"){
+							?>
+							<ul class="msg-error" role="alert">
+								<li><strong><?php echo ERROR;?>:</strong> <?php echo LOGIN_ERROR_MSG;?></li>
+							</ul>
+							<?php
+						}
+					}
+				?>
 				</div>
 			</div>
 		</div>
 	</section>	
-	
-	<?php
-		if(isset($_GET['action']) && $_GET['action'] != ""){
-			if($_GET['action'] === "failure"){
-				?>
-				<ul class="msg-error" role="alert">
-					<li><strong><?php echo ERROR;?>:</strong> <?php echo LOGIN_ERROR_MSG;?></li>
-				</ul>
-				<?php
-			}
-		}
-	?>
 
 	<?php include_once('footer.php');?>
 

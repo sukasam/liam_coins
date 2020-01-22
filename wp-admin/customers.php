@@ -64,7 +64,8 @@
                   <td style="vertical-align: middle;"><center><?php if($rowCustomerList['confirm_email'] == '1'){?><span class="label label-success">Confirmed</span><?php }else{?><span class="label label-important">Not yet confirmed</span><?php }?></center></td>
                   <td style="vertical-align: middle;">
                     <center>
-                      <a href="customer_detail.php?cus_id=<?php echo encode($rowCustomerList['id'],LIAM_COINS_KEY);?>"><button type="button" class="btn btn-warning btn-mini"><i class="icon-eye-open"></i></button></a> 
+                      <a href="customer_detail.php?cus_id=<?php echo encode($rowCustomerList['id'],LIAM_COINS_KEY);?>"><button type="button" class="btn btn-info btn-mini"><i class="icon-eye-open"></i></button></a>
+                      <a href="customer_edit.php?cus_id=<?php echo encode($rowCustomerList['id'],LIAM_COINS_KEY);?>&mode=update"><button type="button" class="btn btn-warning btn-mini"><i class="icon-edit"></i></button></a> 
                     </center>
                   </td>
                 </tr>

@@ -21,7 +21,7 @@
                 $cus_email = mysqli_real_escape_string($conn,$_POST['cus_email']);
                 $cus_references = mysqli_real_escape_string($conn,addslashes($_POST['cus_references']));
                 
-                $sqlCustomer = "SELECT * FROM `lc_customer` WHERE `email` = '".$cus_email."' LIMIT 1";
+                $sqlCustomer = "SELECT * FROM `lc_customer` WHERE `cus_email` = '".$cus_email."' OR `cus_username` = '".$cus_username."' LIMIT 1";
                 $quCustomer = mysqli_query($conn,$sqlCustomer);
                 $rowCustomer = mysqli_fetch_array($quCustomer, MYSQLI_ASSOC);
                 
@@ -76,7 +76,13 @@
 
                     header("Location:../register_success.php?key=".encode($cus_email,LIAM_COINS_KEY));
                 }else{
-                    header("Location:../register.php?action=failure");
+                    if($rowCustomer['cus_username'] === $cus_username){
+                        header("Location:../register.php?action=failure&error=username&val=".$cus_username);
+                    }else if($rowCustomer['cus_email'] === $cus_email){
+                        header("Location:../register.php?action=failure&error=email&val=".$cus_email);
+                    }else{
+                        header("Location:../register.php?action=failure");
+                    }
                 }
 
             }else{

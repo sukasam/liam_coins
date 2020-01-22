@@ -6,7 +6,7 @@ if(!Login::check($_SESSION['cus_id'])){
 	if(isset($_SESSION['cus_token']) && $_SESSION['cus_token'] != ""){
 		if(getTokenLogin($conn,$_SESSION['cus_id']) != $_SESSION['cus_token']){
 			unset($_SESSION['cus_token']);
-			header("Location:login.php");
+			header("Location:logout.php");
 		}
 	}
 }

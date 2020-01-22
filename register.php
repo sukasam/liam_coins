@@ -201,18 +201,6 @@
 			</div>
 		</div>
 	</section>	
-	
-	<?php
-		if(isset($_GET['action']) && $_GET['action'] != ""){
-			if($_GET['action'] === "failure"){
-				?>
-				<ul class="msg-error" role="alert">
-					<li><strong><?php echo ERROR;?>:</strong> <?php echo REGISTER_EMAIL_DUPLICATE;?></li>
-				</ul>
-				<?php
-			}
-		}
-	?>
 
 	<?php include_once('footer.php');?>
 

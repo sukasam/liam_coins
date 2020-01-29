@@ -149,4 +149,66 @@ function getTokenLogin($conn,$cus_id){
     return $rowCus['login_token'];
 }
 
+function get_client_ip() {
+    $ipaddress = '';
+    if (isset($_SERVER['HTTP_CLIENT_IP']))
+        $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+    else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+        $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    else if(isset($_SERVER['HTTP_X_FORWARDED']))
+        $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+    else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
+        $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+    else if(isset($_SERVER['HTTP_FORWARDED']))
+        $ipaddress = $_SERVER['HTTP_FORWARDED'];
+    else if(isset($_SERVER['REMOTE_ADDR']))
+        $ipaddress = $_SERVER['REMOTE_ADDR'];
+    else
+        $ipaddress = 'UNKNOWN';
+    return $ipaddress;
+}
+
+function login_process($conn,$cus_email,$cus_passwordT){
+
+    $sqlCustomer = "SELECT * FROM `lc_customer` WHERE 1 AND (`cus_email` = '".$cus_email."' OR `cus_username` = '".$cus_email."')  AND `cus_password` = '".$cus_passwordT."' AND `status` = '1' LIMIT 1";
+    $quCustomer = mysqli_query($conn,$sqlCustomer);
+    $rowCustomer = mysqli_fetch_array($quCustomer, MYSQLI_ASSOC);
+    
+    if($rowCustomer['id'] != ""){
+        
+        $_SESSION['cus_id'] = $rowCustomer['id'];
+        
+        $cus_token = TokenLogin::generate();
+        $sqlCusUpdate= "UPDATE `lc_customer` SET `login_token` = '".$cus_token."' WHERE `id` = ".$rowCustomer['id'].";";
+        mysqli_query($conn,$sqlCusUpdate);
+
+        $cus_ip = get_client_ip();
+
+        $sqlLogLogin = "INSERT INTO `lc_login` (`id`, `cus_id`, `ip`, `date_login`, `token`) VALUES (NULL, '".$rowCustomer['id']."', '".$cus_ip."', current_timestamp(), '".$cus_token."');";
+        mysqli_query($conn,$sqlLogLogin);
+
+        mysqli_query($conn,"DELETE FROM `lc_login_lock` WHERE `cus_id` = '".$rowCustomer['id']."'");
+    
+        if(isset($_POST['redirect'])){
+            header("Location:../".$_POST['redirect']."?action=success");
+        }else{
+            header("Location:../my-account.php");
+        }
+        
+    }else{
+
+        $sqlCustomer = "SELECT * FROM `lc_customer` WHERE 1 AND (`cus_email` = '".$cus_email."' OR `cus_username` = '".$cus_email."')  LIMIT 1";
+        $quCustomer = mysqli_query($conn,$sqlCustomer);
+        $rowCustomer = mysqli_fetch_array($quCustomer, MYSQLI_ASSOC);
+
+        mysqli_query($conn,"INSERT INTO `lc_login_lock` (`id`, `cus_id`, `cus_account`, `datetime`) VALUES (NULL, '".$rowCustomer['id']."', '".$rowCustomer['cus_username']."', current_timestamp());");
+        
+        if(isset($_POST['redirect'])){
+            header("Location:../".$_POST['redirect']."?action=failure&error=&error=wrong");
+        }else{
+            header("Location:../login.php?action=failure&error=wrong");
+        }
+    }
+}
+
 ?>

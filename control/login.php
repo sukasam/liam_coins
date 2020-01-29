@@ -4,32 +4,51 @@
         if(isset($_POST['cus_email'],$_POST['cus_password'],$_POST['_token'])){
             if(Token::check($_POST['_token'])){
 
-                $cus_email = mysqli_real_escape_string($conn,$_POST['cus_email']);
-                $cus_passwordT = mysqli_real_escape_string($conn,encode($_POST['cus_password'],LIAM_COINS_KEY));
-                $sqlCustomer = "SELECT * FROM `lc_customer` WHERE 1 AND (`cus_email` = '".$cus_email."' OR `cus_username` = '".$cus_email."')  AND `cus_password` = '".$cus_passwordT."' AND `status` = '1' LIMIT 1";
-                $quCustomer = mysqli_query($conn,$sqlCustomer);
-                $rowCustomer = mysqli_fetch_array($quCustomer, MYSQLI_ASSOC);
+                $secretkeyrecaptcha = "6Ld5EtMUAAAAAOH-xx6Vq-tyXF4aaWtirOWo7fO3";
+
+                if(isset($_POST['g-recaptcha-response'])){
+
+                    $captcha = $_POST['g-recaptcha-response'];
+                    $response = json_decode(file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretkeyrecaptcha."&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']), true);
                 
-                if($rowCustomer['id'] != ""){
-                    
-                    $_SESSION['cus_id'] = $rowCustomer['id'];
-                    
-                    $cus_token = TokenLogin::generate();
-                    $sqlCusUpdate= "UPDATE `lc_customer` SET `login_token` = '".$cus_token."' WHERE `id` = ".$rowCustomer['id'].";";
-                    mysqli_query($conn,$sqlCusUpdate);
-                
-                    if(isset($_POST['redirect'])){
-                        header("Location:../".$_POST['redirect']."?action=success");
+                    // if(!$captcha){
+                    //     $missinginputsecret = ["The response parameter is missing."];
+                    //     print_r($missinginputsecret[0]);}        
+                    // }
+
+                    if($response['success'] == true){ 
+
+                        $cus_email = mysqli_real_escape_string($conn,$_POST['cus_email']);
+                        $cus_passwordT = mysqli_real_escape_string($conn,encode($_POST['cus_password'],LIAM_COINS_KEY));
+
+                        $sqlChkLock = "SELECT * FROM `lc_login_lock` WHERE 1 AND `cus_account`= '".$cus_email."' ORDER BY `id` DESC";
+                        $quChkLock = mysqli_query($conn,$sqlChkLock);
+                        $chkLockCount = mysqli_num_rows($quChkLock);
+                        $rowChkLock = mysqli_fetch_array($quChkLock, MYSQLI_ASSOC);
+
+                        if($chkLockCount <= 4){
+                            login_process($conn,$cus_email,$cus_passwordT);
+                        }else{
+
+                            $to_time=strtotime(date("Y-m-d H:i:s"));
+                            $from_time=strtotime($rowChkLock['datetime']); 
+                            $checkTime = (int)round(abs($to_time - $from_time) / 60,2);
+                            
+                            if($checkTime >= 30){
+                                login_process($conn,$cus_email,$cus_passwordT);
+                            }else{
+                                $sqlCusUpdate= "UPDATE `lc_customer` SET `cus_lock` = '1' WHERE (`cus_email` = '".$cus_email."' OR `cus_username` = '".$cus_email."');";
+                                mysqli_query($conn,$sqlCusUpdate);
+                                header("Location:../login.php?action=failure&error=cus_lock");
+                            }
+                        }
+
                     }else{
-                        header("Location:../my-account.php");
+                        die();
                     }
-                    
+
                 }else{
-                    if(isset($_POST['redirect'])){
-                        header("Location:../".$_POST['redirect']."?action=failure");
-                    }else{
-                        header("Location:../login.php?action=failure");
-                    }
+                    die();
                 }
 
             }else{

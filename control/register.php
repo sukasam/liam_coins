@@ -29,8 +29,8 @@
 
                 if(empty($rowCustomer['id'])){
 
-                    $sqlCus = "INSERT INTO `lc_customer` (`id`, `cus_company`, `cus_title`, `cus_fname`, `cus_lname`, `cus_phone`, `cus_email`, `cus_username`, `cus_password`, `cus_references`, `status`, `register_date`, `confirm_email`, `active_link`) 
-                    VALUES (NULL, '".$cus_company."', '".$cus_title."', '".$cus_fname."', '".$cus_lname."', '".$cus_phone."', '".$cus_email."', '".$cus_username."', '".$cus_password."', '".$cus_references."', 0, current_timestamp(), 0, '".$activeLink."');";
+                    $sqlCus = "INSERT INTO `lc_customer` (`id`, `cus_company`, `cus_title`, `cus_fname`, `cus_lname`, `cus_phone`, `cus_email`, `cus_username`, `cus_password`, `cus_references`, `status`, `register_date`, `confirm_email`, `active_link`, `cus_lock`) 
+                    VALUES (NULL, '".$cus_company."', '".$cus_title."', '".$cus_fname."', '".$cus_lname."', '".$cus_phone."', '".$cus_email."', '".$cus_username."', '".$cus_password."', '".$cus_references."', 0, current_timestamp(), 0, '".$activeLink."', 0);";
                     @mysqli_query($conn,$sqlCus);
                     $cusID = mysqli_insert_id($conn);
 

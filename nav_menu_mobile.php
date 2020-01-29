@@ -138,7 +138,7 @@
                         <!-- <li><a href="my-tracking"><?php echo ORDER_TRACKING;?></a></li> -->
                         <li><a href="logout.php"><?php echo LOGOUT;?></a></li>
                     </ul>
-                    <span class="arrow-main-menu">
+                    <span class="arrow-main-menu-m">
                         <i class="fa fa-angle-down" aria-hidden="true"></i>
                     </span>
                 </li>

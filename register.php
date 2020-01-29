@@ -51,6 +51,45 @@
 				}
 			}
 
+			function check_confirmpassword(){
+
+				var pwdChk = $('#cus_password').val();
+				var pwdChk2 = $('#cus_repeatpassword').val();
+
+				if(pwdChk != pwdChk2){
+					$('#cus_repeatpassword').focus();
+					$('#p4f').removeClass('hide');
+					$('#p4s').addClass('hide');
+					$('#chkPwd').removeClass('hide');
+				}else{
+					$('#p4f').addClass('hide');
+					$('#p4s').removeClass('hide');
+					$('#chkPwd').addClass('hide');
+				}
+
+				if(pwdChk2 == ""){
+					$('#p4f').removeClass('hide');
+					$('#p4s').addClass('hide');
+				}
+				
+			}
+
+			function check_confirmemail(){
+
+				var emChk = $('#cus_email').val();
+				var emChk2 = $('#cus_confirm_email').val();
+
+				if(emChk != emChk2){
+					$('#cus_confirm_email').focus();
+					$('#chkEmail').removeClass('hide');
+				}else{
+					$('#chkEmail').addClass('hide');
+				}
+
+			}
+
+			
+
 			function validateForm(){
 
 				var passwordRegex = new RegExp("^(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
@@ -67,12 +106,18 @@
 				
 				if(pwdChk != pwdChk2){
 					$('#cus_repeatpassword').focus();
+					$('#chkPwd').removeClass('hide');
 					return false;
+				}else{
+					$('#chkPwd').addClass('hide');
 				}
 
 				if(cus_email != cus_confirm_email){
 					$('#cus_confirm_email').focus();
+					$('#chkEmail').removeClass('hide');
 					return false;
+				}else{
+					$('#chkEmail').addClass('hide');
 				}
 				
 				if(!$('#cus_chkterm').prop('checked')){
@@ -125,12 +170,14 @@
 								<p><span id="p1f"><img src="images/icon_uncheck.jpg" width="18"></span><span id="p1s" class="hide"><img src="images/icon_check.jpg" width="18"></span> Your input was to short (at least 8 characters).</p>
 								<p><span id="p2f"><img src="images/icon_uncheck.jpg" width="18"></span><span id="p2s" class="hide"><img src="images/icon_check.jpg" width="18"></span> At least one or more special characters included.</p>
 								<p><span id="p3f"><img src="images/icon_uncheck.jpg" width="18"></span><span id="p3s" class="hide"><img src="images/icon_check.jpg" width="18"></span> At least one or more numbers included.</p>
+								<p><span id="p4f"><img src="images/icon_uncheck.jpg" width="18"></span><span id="p4s" class="hide"><img src="images/icon_check.jpg" width="18"></span> Confirmed repeat password.</p>
 							</div>
 							<div class="col-12 col-md-6 p-b-20">
-								<input class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="margin-bottom: 0px;" type="password" id="cus_password" name="cus_password" placeholder="Password" required onkeyup="check_password();">
+								<input class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="margin-bottom: 0px;" type="password" id="cus_password" name="cus_password" placeholder="Password" maxlength="20" required onkeyup="check_password();">
 							</div>
 							<div class="col-12 col-md-6 p-b-20">
-								<input class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="margin-bottom: 0px;" type="password" id="cus_repeatpassword" name="cus_repeatpassword" placeholder="Repeat Password" required>
+								<input class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="margin-bottom: 0px;" type="password" id="cus_repeatpassword" name="cus_repeatpassword" placeholder="Repeat Password" maxlength="20" required onkeyup="check_confirmpassword();">
+								<small class="p-l-30 hide" id="chkPwd" style="color: red;font-weight: bold;">Passwords do not match.</small>
 							</div>
 							<div class="col-12 col-md-6 p-b-20">
 								<input class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="margin-bottom: 0px;" type="text" name="cus_company" placeholder="Company">
@@ -164,10 +211,20 @@
 								<input class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="margin-bottom: 0px;" type="text" name="cus_city" placeholder="City" required>
 							</div>
 							<div class="col-12 p-b-20">
-								<select class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="background: none;
+								<!-- <select class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="background: none;
     border: 1px solid #dddddd;" name="cus_country" id="cus_country" required>
 									<option value="Germany">Germany</option>
-								</select>
+								</select> -->
+								<select style="background: none;
+    border: 1px solid #dddddd;" required="required" class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30">
+									<?php 
+										$sqlCountry = "SELECT * FROM `lc_countries`";
+										$qucountry = mysqli_query($conn,$sqlCountry);
+										while($rowCountry = mysqli_fetch_array($qucountry, MYSQLI_ASSOC)){
+									?>
+										<option value="<?php echo $rowCountry['country_name'];?>" <?php if($rowCountry['country_name'] === 'Germany'){echo 'selected';}?>><?php echo $rowCountry['country_name'];?></option>
+									<?php }?>
+									</select>
 							</div>
 							<div class="col-12 p-b-20">
 								<input class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="margin-bottom: 0px;" type="tel" name="cus_phone" placeholder="Phone number" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" >
@@ -176,7 +233,8 @@
 								<input class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="margin-bottom: 0px;" type="email" name="cus_email" id="cus_email" placeholder="Email address" required>
 							</div>
 							<div class="col-12 col-md-6 p-b-20">
-								<input class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="margin-bottom: 0px;" type="email" name="cus_confirm_email" id="cus_confirm_email" placeholder="Confirm your email address" required>
+								<input class="stext-111 cl2 plh3 size-116 p-l-30 p-r-30" style="margin-bottom: 0px;" type="email" name="cus_confirm_email" id="cus_confirm_email" placeholder="Confirm your email address" required onkeyup="check_confirmemail();">
+								<small class="p-l-30 hide" id="chkEmail" style="color: red;font-weight: bold;">Email do not match.</small>
 							</div>
 							<div class="col-12 p-b-20">
 								<textarea class="stext-111 cl2 plh3 size-124 p-lr-30 p-tb-15" name="cus_references" placeholder="References"></textarea>

@@ -148,8 +148,9 @@
 								if($_GET['action'] === "failure"){
 									$msgErrors = "";
 									if(isset($_GET['error']) && $_GET['error'] != ""){
-										if($_GET['error'] == 1){$msgErrors = 'Your current password is incorrect.';}
-										else if($_GET['error'] == 2){$msgErrors = 'New passwords do not match.';}
+										if($_GET['error'] == 1){$msgErrors = ' Your current password is incorrect.';}
+										else if($_GET['error'] == 2){$msgErrors = ' New passwords do not match.';}
+										else if($_GET['error'] == 3){$msgErrors = ' After changing your password within 24 hours, your account will not be able to change anything.';}
 										else{}
 									}
 									?>

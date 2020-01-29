@@ -156,6 +156,15 @@ function isNumberKey(evt){
                 <input type="text" class="span11" name="cus_password" placeholder="" value="">
               </div>
             </div>
+            <div class="control-group">
+              <label class="control-label">Customer Banned</label>
+              <div class="controls">
+                <select name="cus_lock">
+                  <option value="1" <?php if(isset($rowCusE['cus_lock']) && $rowCusE['cus_lock'] == '1'){echo 'selected';}?>>Banned</option>
+                  <option value="0" <?php if(isset($rowCusE['cus_lock']) && $rowCusE['cus_lock'] == '0'){echo 'selected';}?>>Unbanned<option>
+                </select>
+              </div>
+            </div>
             <div class="form-actions">
               <input type="hidden" name="_token" value="<?php echo Token::generate();?>"/>
               <input type="hidden" name="mode" value="<?php echo $mode;?>"/>

@@ -4,6 +4,21 @@
         if(isset($_POST['_token'])){
             if(Token::check($_POST['_token'])){
 
+                $sqlChkReset = "SELECT * FROM `lc_reset_password` WHERE 1 AND `cus_id` = '".$_SESSION['cus_id']."' ORDER BY `id` DESC LIMIT 1";
+                $quChkReset = mysqli_query($conn,$sqlChkReset);
+                $rowReset = mysqli_fetch_array($quChkReset, MYSQLI_ASSOC);
+
+                if($rowReset['id'] != ""){
+                    $to_time=strtotime(date("Y-m-d H:i:s"));
+                    $from_time=strtotime($rowReset['datetime']); 
+                    $checkTime = (int)round(abs($to_time - $from_time) / 60,2);
+
+                    if($checkTime <= 1440){
+                        header("Location:../my-address.php?action=failure&error=1");
+                        die();
+                    }
+                }
+
                 $bill_fname = mysqli_real_escape_string($conn,$_POST['bill_fname']);
                 $bill_lname = mysqli_real_escape_string($conn,$_POST['bill_lname']);
                 $bill_company_name = mysqli_real_escape_string($conn,$_POST['bill_company_name']);

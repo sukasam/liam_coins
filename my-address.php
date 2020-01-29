@@ -73,6 +73,24 @@ if(isset($_SESSION['cus_id']) && $_SESSION['cus_id'] != ""){
 							<?php echo SHIP_ADDRESS;?>
 						</h3>
 
+						<?php
+							if(isset($_GET['action']) && $_GET['action'] != ""){
+
+								if($_GET['action'] === "failure"){
+									$msgErrors = "";
+									if(isset($_GET['error']) && $_GET['error'] != ""){
+										if($_GET['error'] == 1){$msgErrors = ' After changing your password within 24 hours, your account will not be able to change anything.';}
+										else{}
+									}
+									?>
+									<ul class="msg-error" role="alert">
+										<li><strong><?php echo ERROR;?>:</strong><?php echo $msgErrors;?></li>
+									</ul>
+									<?php
+								}
+							}
+						?>
+
 						<div class="row p-t-30">
 							<div class="col-md-4 col-lg-3 p-b-80">
 								<?php include_once('account_menu.php')?>

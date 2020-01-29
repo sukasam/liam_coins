@@ -8,6 +8,21 @@
                 $quCustomer = mysqli_query($conn,$sqlCustomer);
                 $rowCustomer = mysqli_fetch_array($quCustomer, MYSQLI_ASSOC);
 
+                $sqlChkReset = "SELECT * FROM `lc_reset_password` WHERE 1 AND `cus_id` = '".$_SESSION['cus_id']."' ORDER BY `id` DESC LIMIT 1";
+                $quChkReset = mysqli_query($conn,$sqlChkReset);
+                $rowReset = mysqli_fetch_array($quChkReset, MYSQLI_ASSOC);
+
+                if($rowReset['id'] != ""){
+                    $to_time=strtotime(date("Y-m-d H:i:s"));
+                    $from_time=strtotime($rowReset['datetime']); 
+                    $checkTime = (int)round(abs($to_time - $from_time) / 60,2);
+
+                    if($checkTime <= 1440){
+                        header("Location:../my-account.php?action=failure&error=3");
+                        die();
+                    }
+                }
+
                 if($rowCustomer['id']){
 
                     $cus_fname = mysqli_real_escape_string($conn,$_POST['cus_fname']);

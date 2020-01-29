@@ -1,7 +1,12 @@
 <?php
+
+    date_default_timezone_set("Asia/Bangkok");
+
     define("LIAM_COINS_KEY","SUKASAM");
     define("LIAM_COINS_CURRENCY","$");
     define("LIAM_COINS_TITLE","Liam Coins");
+    define("LIAM_COINS_NUM_RESET_EMAIL","2");
+    define("LIAM_COINS_EMAIL_CS","mme.dumrus@gmail.com");
     
 
     /// MENU ////

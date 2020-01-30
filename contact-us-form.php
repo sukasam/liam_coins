@@ -6,7 +6,7 @@ $keyrecaptcha = "6Ld5EtMUAAAAAM8evGTzvEjYr1FPiFOdj5FRtCaS";
 <head>
 	<title>Customer Service</title>
 	<?php include_once('head_meta.php');?>
-	<script src='https://www.google.com/recaptcha/api.js?hl=th'></script>
+	<script src='https://www.google.com/recaptcha/api.js?hl=en'></script>
 	<script> 
 		function makeaction(){
 				document.getElementById('submit').disabled = false;  

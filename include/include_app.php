@@ -1,5 +1,6 @@
 <?php
     session_start();
+    ini_set('expose_php', 'Off');
     include_once('config.php');
     include_once('con_db.php');
     include_once('function.php');

@@ -311,18 +311,5 @@
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
 
-	<!-- <script src="js/js.scrollPagination.js"></script>
-	<script>
-		$(document).loadScrollData(0,{
-			limit		:	8,
-			cat_id      :   '<?php echo $_GET['cat_id'];?>',
-			catsub_id   :   '<?php echo $_GET['catsub_id'];?>',
-			listingId	:	"#get-list-view",
-			loadMsgId	:	'#load-msg',
-			ajaxUrl		:	'include/load_product.php',
-			loadingMsg	:	'<div class="alert alert-warning p-1 text-center"><i class="fa fa-fw fa-spin fa-spinner"></i>Please Wait...!</div>',
-		});
-	</script> -->
-
 </body>
 </html>
